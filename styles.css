@@ -25,8 +25,9 @@ button {
   border-radius: 10px;
 }
 .hero button {
-  display: block;
-  margin: 20px auto;
+    display: block;
+    margin: 15px auto;
+    width: 250px;
 }
 
 .hero p {
