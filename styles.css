@@ -52,3 +52,32 @@ a {
     text-decoration: none;
     font-size: 14px;
 }
+.campo{
+    background:#111;
+    border:2px solid gold;
+    color:white;
+    height:55px;
+    padding-left:15px;
+}
+
+.btn-entrar{
+    background:gold;
+    color:black;
+    height:55px;
+    font-size:22px;
+    border-radius:15px;
+}
+
+.btn-cadastro{
+    background:transparent;
+    border:2px solid gold;
+    color:gold;
+    height:55px;
+    font-size:22px;
+    border-radius:15px;
+}
+
+.link{
+    color:gold;
+    font-size:18px;
+}
