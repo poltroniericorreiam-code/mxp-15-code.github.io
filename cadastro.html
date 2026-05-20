@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -20,21 +20,17 @@
 
         <form id="formCadastro">
 
-<input type="text" id="usuario" placeholder="Usuário">
-<br><br>
+            <input type="text" id="usuario" placeholder="Usuário">
 
-<input type="password" id="senha" placeholder="Senha">
-<br><br>
+            <br><br>
 
-<button type="submit">
-Cadastrar
-</button>
+            <input type="password" id="senha" placeholder="Senha">
 
-        </form>
+            <br><br>
 
-<button type="submit">
-    Cadastrar
-</button>
+            <button type="submit">
+                Cadastrar
+            </button>
 
         </form>
 
@@ -46,15 +42,25 @@ Cadastrar
         </a>
 
     </div>
+
     <script>
-document.getElementById("formCadastro").addEventListener("submit", function(e) {
-    e.preventDefault();
 
-    alert("Cadastro realizado com sucesso!");
+    document.getElementById("formCadastro").addEventListener("submit", function(e){
 
-    // Vai para login
-    window.location.href = "login.html";
-});
+        e.preventDefault();
+
+        let usuario = document.getElementById("usuario").value;
+        let senha = document.getElementById("senha").value;
+
+        localStorage.setItem("usuario", usuario);
+        localStorage.setItem("senha", senha);
+
+        alert("Cadastro realizado com sucesso!");
+
+        window.location.href = "login.html";
+
+    });
+
     </script>
 
 </body>
