@@ -85,3 +85,11 @@ img{
     margin: 5px;
     font-size: 12px;
 }
+.vip-box{
+    background: linear-gradient(gold, orange);
+    color: black;
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 20px;
+    font-weight: bold;
+}
