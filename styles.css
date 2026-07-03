@@ -126,3 +126,63 @@ body{
     align-items:center;
     font-size:14px;
 }
+
+/* ========================= */
+/* BANNER */
+/* ========================= */
+
+.banner{
+    margin:15px;
+    padding:20px;
+    border-radius:20px;
+    background:linear-gradient(135deg,#ffb400,#ff6a00);
+    text-align:center;
+    color:white;
+}
+
+.banner h2{
+    margin:0;
+    font-size:28px;
+}
+
+.banner p{
+    margin:10px 0 20px;
+    font-size:18px;
+}
+
+.banner button{
+    background:white;
+    color:#ff6a00;
+    border:none;
+    border-radius:12px;
+    padding:12px 25px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* ========================= */
+/* CATEGORIAS */
+/* ========================= */
+
+.categorias{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding:0 15px 15px;
+}
+
+.categorias button{
+    background:#13203d;
+    color:white;
+    border:none;
+    border-radius:20px;
+    padding:12px 18px;
+    font-size:16px;
+    white-space:nowrap;
+    cursor:pointer;
+}
+
+.categorias button:hover{
+    background:#1f7cff;
+}
