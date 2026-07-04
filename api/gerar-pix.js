@@ -7,56 +7,39 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Método não permitido.' });
 
   const apiKey = process.env.NEXT_PUBLIC_ASAAS_API_KEY || process.env.ASAAS_API_KEY;
-  if (!apiKey) return res.status(500).json({ error: 'Chave do Asaas não configurada na Vercel.' });
+  if (!apiKey) return res.status(500).json({ error: 'Chave do Asaas não configurada.' });
 
   try {
     const { valor } = req.body;
 
-    const amanha = new Date();
-    amanha.setDate(amanha.getDate() + 1);
-    const dataVencimento = amanha.toISOString().split('T')[0];
-
-    // 1. Cria um cliente rápido e dinâmico para não dar erro de ID inexistente
-    const resCliente = await fetch('https://asaas.com', {
+    // Utiliza a API direta de QR Code Pix do Asaas que dispensa cadastro de cliente
+    const response = await fetch('https://asaas.com', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'access_token': apiKey },
-      body: JSON.stringify({ name: "Cliente MXP Site", cpfCnpj: "00000000000" }) // CPF genérico aceito pela API de testes/produção
-    });
-    const dadosCliente = await resCliente.json();
-    const customerId = dadosCliente.id || 'cus_000005844411'; // Se falhar, usa o padrão
-
-    // 2. Cria a cobrança PIX associada a esse cliente
-    const responseCobranca = await fetch('https://asaas.com', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'access_token': apiKey },
+      headers: { 
+        'Content-Type': 'application/json', 
+        'access_token': apiKey 
+      },
       body: JSON.stringify({
-        customer: customerId, 
-        billingType: 'PIX',
+        addressKey: null, // O Asaas usa automaticamente a chave Pix ativa da sua conta
+        description: "Depósito via site MXP",
         value: Number(valor || 20),
-        dueDate: dataVencimento,
-        description: "Depósito via site MXP"
+        format: "ALL" // Retorna tanto a imagem quanto a linha copia e cola
       })
     });
 
-    const dadosCobranca = await responseCobranca.json();
-    if (!responseCobranca.ok) {
-      return res.status(400).json({ error: dadosCobranca.errors?.[0]?.description || 'Erro na cobrança Asaas.' });
+    const dados = await response.json();
+
+    if (!response.ok) {
+      return res.status(400).json({ error: dados.errors?.[0]?.description || 'Erro na API do Asaas.' });
     }
 
-    // 3. Busca o QR Code Pix final
-    const responsePix = await fetch(`https://asaas.com/${dadosCobranca.id}/pixQrCode`, {
-      method: 'GET',
-      headers: { 'access_token': apiKey }
-    });
-
-    const dadosPix = await responsePix.json();
     return res.status(200).json({
       sucesso: true,
-      copiaECola: dadosPix.payload,
-      imagemQrCode: dadosPix.encodedImage
+      copiaECola: dados.payload,
+      imagemQrCode: dados.encodedImage
     });
 
   } catch (error) {
-    return res.status(500).json({ error: 'Erro interno na comunicação com o Gateway.' });
+    return res.status(500).json({ error: 'Erro interno no servidor de pagamentos.' });
   }
 }
