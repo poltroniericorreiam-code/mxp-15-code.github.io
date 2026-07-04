@@ -13,8 +13,7 @@ export default async function handler(req, res) {
     const { valor } = req.body;
 
     // Utiliza a API direta de QR Code Pix do Asaas que dispensa cadastro de cliente
-    const response = await fetch('https://asaas.com', {
-      method: 'POST',
+    const response = await fetch('https://api.asaas.com/v3/pix/qrCodes/static', {     method: 'POST',
       headers: { 
         'Content-Type': 'application/json', 
         'access_token': apiKey 
