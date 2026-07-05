@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo</title>
+
+    <!-- CORRIGIDO: Vinculado ao seu arquivo real estilos.css -->
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <!-- Imagem/logo carregando da raiz -->
+        <img src="4085.jpg" width="150" alt="Logo">
+
+        <h1>FORTUNE TIGER</h1>
+
+        <br>
+
+        <h2>🎰 JOGO DEMONSTRATIVO</h2>
+
+        <br>
+
+        <!-- Botão para acionar o giro -->
+        <button id="btn-girar" onclick="girarSlot()">
+            GIRAR
+        </button>
+
+        <br><br>
+
+        <!-- Área onde o resultado será exibido -->
+        <h2 id="resultado">
+            🎰 Boa sorte!
+        </h2>
+
+        <br><br>
+
+        <!-- CORRIGIDO: Redireciona para o arquivo correto página inicial.html -->
+        <button onclick="window.location.href='página inicial.html'">
+            ⬅ Voltar ao Início
+        </button>
+
+    </div>
+
+<script>
+function girarSlot() {
+    const botao = document.getElementById("btn-girar");
+    const resultado = document.getElementById("resultado");
+
+    // Desativa o botão temporariamente para simular o giro do slot
+    botao.disabled = true;
+    resultado.innerHTML = "⏳ Girando...";
+
+    setTimeout(() => {
+        // Gera um prêmio aleatório entre 5 e 105 reais
+        let premio = Math.floor(Math.random() * 100) + 5;
+
+        // Atualiza a tela com o valor ganho
+        resultado.innerHTML = "🎉 Você ganhou R$ " + premio + ",00!";
+        
+        // Reativa o botão para o próximo giro
+        botao.disabled = false;
+    }, 1000); // 1000 milissegundos = 1 segundo de animação
+}
+</script>
+
+</body>
+</html>
