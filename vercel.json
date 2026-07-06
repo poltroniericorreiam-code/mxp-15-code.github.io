@@ -2,11 +2,7 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/p%C3%A1gina%20inicial",
-      "destination": "/home.html"
-    },
-    {
-      "source": "/página inicial",
+      "source": "/home.html",
       "destination": "/home.html"
     }
   ],
