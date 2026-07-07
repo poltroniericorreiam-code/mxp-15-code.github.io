@@ -3,37 +3,61 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Promoções</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Menu de Abas Superior */
-        .top-nav-menu {
-            display: flex;
+        /* CONTAINER PRINCIPAL DA BARRA (Trava o arrasto da página) */
+        .scroll-menu-container {
+            width: 100%;
             overflow-x: auto;
-            white-space: nowrap;
+            overflow-y: hidden;
             background-color: #161c28;
-            padding: 12px 5px;
-            gap: 15px;
-            border-bottom: 1px solid #1e2636;
-            margin-bottom: 15px;
             border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 12px 0;
+            position: relative;
+            z-index: 999;
+            /* Força o navegador do celular a rolar apenas de lado e ignorar a página */
+            touch-action: pan-x; 
+            -webkit-overflow-scrolling: touch;
         }
-        .top-nav-menu::-webkit-scrollbar {
-            display: none; /* Oculta a barra de rolagem no celular */
+
+        /* Oculta completamente qualquer barra visual */
+        .scroll-menu-container::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
         }
-        .nav-item {
+
+        /* LISTA INTERNA DOS BOTÕES */
+        .scroll-menu-list {
+            display: flex;
+            gap: 14px;
+            padding: 0 15px;
+            width: max-content;
+        }
+
+        /* BOTÕES DO MENU */
+        .menu-tab-btn {
             color: #8fa0b4;
             font-family: sans-serif;
             font-size: 14px;
             font-weight: 600;
-            text-decoration: none;
-            padding: 5px 10px;
+            background: none;
+            border: none;
+            padding: 6px 12px;
             cursor: pointer;
+            white-space: nowrap;
+            transition: color 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
         }
-        .nav-item.active {
-            color: #3b82f6; /* Azul destacado para a aba atual */
-            border-bottom: 2px solid #3b82f6;
+
+        /* BOTÃO ATIVO (EVENTOS) */
+        .menu-tab-btn.active {
+            color: #3b82f6;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 3px;
         }
     </style>
 </head>
@@ -42,13 +66,15 @@
 
     <div class="login-box">
 
-        <div class="top-nav-menu">
-            <a class="nav-item active">Eventos</a>
-            <a class="nav-item">Rebate</a>
-            <a class="nav-item">VIP</a>
-            <a class="nav-item">Código de Resgate</a>
-            <a class="nav-item">Histórico</a>
-            <a class="nav-item">Pendente</a>
+        <div class="scroll-menu-container">
+            <div class="scroll-menu-list">
+                <button class="menu-tab-btn active">Eventos</button>
+                <button class="menu-tab-btn">Rebate</button>
+                <button class="menu-tab-btn">VIP</button>
+                <button class="menu-tab-btn">Código de Resgate</button>
+                <button class="menu-tab-btn">Histórico</button>
+                <button class="menu-tab-btn">Pendente</button>
+            </div>
         </div>
 
         <div style="background-color: #1a1f2c; padding: 30px 20px; text-align: center; border-radius: 16px; font-family: sans-serif; margin-bottom: 20px;">
