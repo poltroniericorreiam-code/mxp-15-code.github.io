@@ -3,7 +3,23 @@
   "builds": [
     { "src": "api/**/*.js", "use": "@vercel/node" }
   ],
+  "rewrites": [
+    {
+      "source": "/home.html",
+      "destination": "/home.html"
+    }
+  ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" }
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
   ]
 }
