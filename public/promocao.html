@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promoções</title>
+    <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Estilos básicos para o layout dos baús */
+        .grid-bau {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 10px;
+            background-color: #0b111e;
+            border-radius: 12px;
+            margin: 10px;
+        }
+        .bau-item {
+            position: relative;
+            text-align: center;
+        }
+        .bau-texto {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 9px;
+            font-weight: bold;
+            width: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-box">
+        <!-- Seu conteúdo do topo -->
+        <div style="background-color: #0b111e; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <h2 style="color: #ffffff;">Promoções MXP$15</h2>
+        </div>
+
+        <!-- Grade de Baús -->
+        <div class="grid-bau">
+            <!-- Baú 1 -->
+            <div class="bau-item">
+                <img src="treasureBoxClose.png" style="width: 75px; height: 75px; object-fit: contain;">
+                <div class="bau-texto">Promo 1<br><span style="color: #f6ad55;">R$ 30</span></div>
+            </div>
+            <!-- Baú 2 -->
+            <div class="bau-item">
+                <img src="treasureBoxClose.png" style="width: 75px; height: 75px; object-fit: contain;">
+                <div class="bau-texto">Promo 2<br><span style="color: #f6ad55;">R$ 30</span></div>
+            </div>
+            <!-- Baú 3 -->
+            <div class="bau-item">
+                <img src="treasureBoxClose.png" style="width: 75px; height: 75px; object-fit: contain;">
+                <div class="bau-texto">Promo 3<br><span style="color: #f6ad55;">R$ 30</span></div>
+            </div>
+            <!-- Baú 4 -->
+            <div class="bau-item">
+                <img src="treasureBoxClose.png" style="width: 75px; height: 75px; object-fit: contain;">
+                <div class="bau-texto">Promo 4<br><span style="color: #f6ad55;">R$ 30</span></div>
+            </div>
+        </div>
+
+        <!-- Seção de Convites -->
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="copiarCodigo()">Copiar Código</button>
+            <br><br>
+            <button onclick="compartilharLink()">Compartilhar Link</button>
+            <br><br>
+            <button onclick="window.location.href='index.html'">Voltar</button>
+        </div>
+    </div>
+
+    <script>
+        function copiarCodigo() {
+            const codigo = document.getElementById("codigoVip").innerText;
+            navigator.clipboard.writeText(codigo).then(() => {
+                alert("Código de convite copiado!");
+            }).catch(err => {
+                alert("Erro ao copiar o código");
+            });
+        }
+
+        function compartilharLink() {
+            const linkSuporte = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Venha para o MXP$15',
+                    text: 'Cadastre-se usando meu link!',
+                    url: linkSuporte,
+                }).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(linkSuporte);
+                alert("Link de indicação copiado!");
+            }
+        }
+    </script>
+</body>
+</html>
