@@ -323,3 +323,23 @@ body:has(.login-box) {
     cursor: pointer;
     margin-top: 4px;
 }
+
+/* Container para rolar os botões horizontalmente sem arrastar a página toda */
+.promo-buttons-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 16px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Remove a barra de rolagem visualmente */
+.promo-buttons-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Garante que os botões mantenham o tamanho original e não encolham */
+.promo-buttons-container button {
+    flex: 0 0 auto;
+}
