@@ -221,7 +221,7 @@ body {
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid #23283c;
-    height: 250px; /* Altura fixa para todos os cards de promoção */
+    height: 125px; /* Altura fixa para todos os cards de promoção */
 }
 
 .promo-card img {
