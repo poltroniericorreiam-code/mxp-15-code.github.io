@@ -338,8 +338,3 @@ body:has(.login-box) {
 .promo-buttons-container::-webkit-scrollbar {
     display: none;
 }
-
-/* Garante que os botões mantenham o tamanho original e não encolham */
-.promo-buttons-container button {
-    flex: 0 0 auto;
-}
