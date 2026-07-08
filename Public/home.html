@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MXP$15</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- TOPO -->
+  <header class="topo">
+    <div class="logo">MXP$15</div>
+    <div class="saldo">R$ 00,00</div>
+  </header>
+
+  <!-- BOTÕES DE AÇÃO -->
+  <section class="acoes">
+    <button onclick="window.location.href='deposito.html'">Depósito</button>
+    <button onclick="window.location.href='saque.html'">Saque</button>
+  </section>
+  
+  <!-- BANNER COM IMAGEM DE FUNDO -->
+  <section class="banner-container">
+    <img src="images.jpeg" class="banner-img" alt="Banner MXP15">
+    <div class="banner-overlay">
+      <h2>🎉 Bem-vindo ao MXP$15</h2>
+      <p>Promoções exclusivas todos os dias.</p>
+      <button onclick="window.location.href='promocao.html'">VER PROMOÇÕES</button>
+    </div>
+  </section>
+
+  <!-- CATEGORIAS -->
+  <section class="categorias">
+    <button class="active">🔥 Popular</button>
+    <button>🐯 PG</button>
+    <button>🎰 Pragmatic</button>
+    <button>🎲 Evolution</button>
+  </section>
+
+  <!-- SEÇÃO DE JOGOS -->
+  <section class="games-section">
+    <h2>🔥 Jogos Populares</h2>
+
+    <div class="games-grid">
+      <!-- JOGO 1 -->
+      <div class="game-card">
+        <img src="tiger.jpg" alt="Fortune Tiger">
+        <p>🐯 Fortune Tiger</p>
+        <button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+
+      <!-- JOGO 2 -->
+      <div class="game-card">
+        <img src="rabbit.jpg" alt="Fortune Rabbit">
+        <p>🐰 Fortune Rabbit</p>
+        <button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+
+      <!-- JOGO 3 -->
+      <div class="game-card">
+        <img src="dragon.jpg" alt="Fortune Dragon">
+        <p>🐲 Fortune Dragon</p>
+        <button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+      
+      <!-- JOGO 4 -->
+      <div class="game-card">
+        <img src="ox.jpg" alt="Fortune Ox">
+        <p>🐂 Fortune Ox</p>
+        <button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU INFERIOR -->
+  <nav class="menu-bottom">
+    <a href="home.html" class="active">🏠 <span>Início</span></a>
+    <a href="promocao.html">🎁 <span>Promoção</span></a>
+    <a href="convite.html">👥 <span>Convidar</span></a>
+    <a href="perfil.html">👤 <span>Perfil</span></a>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
