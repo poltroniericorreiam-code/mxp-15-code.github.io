@@ -1,0 +1,95 @@
+/* ==========================================================================
+   CONFIGURAÇÃO GERAL
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #0f121d;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;
+    color: #ffffff;
+    min-height: 100vh;
+    padding-bottom: 80px; /* Espaço para o menu inferior */
+}
+
+/* ==========================================================================
+   GRID DE JOGOS (4 COLUNAS SOLICITADAS)
+   ========================================================================== */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Força 4 colunas iguais */
+    gap: 8px;
+    padding: 10px;
+    width: 100%;
+}
+
+.game-card {
+    background: #171b2a;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #23283c;
+}
+
+.game-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Mantém o formato quadrado */
+    object-fit: cover;
+    display: block;
+}
+
+.game-card p {
+    font-size: 9px;
+    margin: 6px 2px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 95%;
+}
+
+.game-card button {
+    width: 90%;
+    margin-bottom: 8px;
+    padding: 6px 0;
+    border: none;
+    border-radius: 4px;
+    background: #0076ff;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   ELEMENTOS DE APOIO
+   ========================================================================== */
+.topo {
+    background: #171b2a;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.menu-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #171b2a;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    border-top: 1px solid #23283c;
+    z-index: 1000;
+}
