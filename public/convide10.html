@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Indique Amigos</title>
+    <style>
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            background-color: #060b14;
+            font-family: sans-serif;
+            color: #ffffff;
+        }
+
+        /* BARRA SUPERIOR */
+        .top-navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #0b111e;
+            border-bottom: 1px solid #141d2f;
+        }
+        .back-arrow {
+            font-size: 20px;
+            cursor: pointer;
+            color: #8fa0ba;
+            text-decoration: none;
+        }
+        .nav-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .doc-icon {
+            font-size: 20px;
+            color: #8fa0ba;
+        }
+
+        /* CAIXA DO LINK DE CONVITE */
+        .invite-box {
+            background-color: #111928;
+            margin: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #1c283d;
+        }
+        .link-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #090e17;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            color: #a0aec0;
+            word-break: break-all;
+        }
+        .copy-icon {
+            font-size: 16px;
+            color: #3b82f6;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* COMPARTILHAMENTO RÁPIDO */
+        .share-title {
+            font-size: 13px;
+            color: #8fa0ba;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+        .share-icons {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        .share-icons::-webkit-scrollbar { display: none; }
+        .icon-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* SUBORDINADOS DIRETOS */
+        .sub-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid #1c283d;
+            font-size: 13px;
+        }
+        .sub-text span { color: #f59e0b; font-weight: bold; }
+        .details-link { color: #3b82f6; font-size: 12px; text-decoration: none; }
+
+        /* GRADE DOS BAÚS (PROMOÇÕES) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px 5px;
+            padding: 15px;
+            background-color: #0b111e;
+            margin: 15px;
+            border-radius: 12px;
+        }
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        /* ESTILO DO BAÚ EM CSS */
+        .chest {
+            width: 55px;
+            height: 45px;
+            background: linear-gradient(135deg, #e6a100, #b87333);
+            border: 2px solid #ffe066;
+            border-radius: 6px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .chest::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #ffe066;
+        }
+        .chest-value {
+            position: absolute;
+            background-color: rgba(255, 0, 0, 0.85);
+            color: #ffffff;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 1px 4px;
+            border-radius: 10px;
+            bottom: 4px;
+            border: 1px solid #ff9999;
+        }
+        .promo-text {
+            font-size: 10px;
+            color: #718096;
+            margin-top: 6px;
+            line-height: 1.2;
+        }
+        .promo-text span { color: #f6ad55; font-weight: bold; }
+
+        /* SETA DE FLUXO ENTRE OS BAÚS */
+        .item-arrow {
+            position: absolute;
+            right: -8px;
+            top: 15px;
+            color: #4a5568;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* CONDIÇÕES E REGRAS DO EVENTO */
+        .info-section {
+            background-color: #0b111e;
+            margin: 15px;
+            padding: 15px;
+            border-radius: 12px;
+        }
+        .section-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #a0aec0;
+            margin-bottom: 15px;
+        }
+        .cond-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #141d2f;
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+        .cond-value { color: #3b82f6; font-weight: bold; }
+
+        .regra-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+        .regra-text {
+            font-size: 12px;
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR -->
+    <div class="top-navbar">
+        <a href="promocao.html" class="back-arrow">&lt;</a>
+        <div class="nav-title">Indique amigos para rece...</div>
+        <div class="doc-icon">📄</div>
+    </div>
+
+    <!-- BOX COMPARTILHAMENTO -->
+    <div class="invite-box">
+        <div class="link-row">
+            <span>Meu link: https://mxp15-com.vercel.app/?pid=105286</span>
+            <span class="copy-icon" onclick="alert('Link copiado!')">📋</span>
+        </div>
+
+        <div class="share-title">Compartilhamento Rápido</div>
+        <div class="share-icons">
+            <div class="icon-circle" style="background-color: #24A1DE;">✈️</div>
+            <div class="icon-circle" style="background-color: #25D366;">💬</div>
+            <div class="icon-circle" style="background-color: #1877F2;">📘</div>
+            <div class="icon-circle" style="background-color: #E1306C;">📸</div>
+            <div class="icon-circle" style="background-color: #000000; border: 1px solid #333;">𝕏</div>
+            <div class="icon-circle" style="background-color: #FF0000;">▶️</div>
+            <div class="icon-circle" style="background-color: #0072B1;">✉️</div>
+        </div>
+
+        <div class="sub-row">
+            <div class="sub-text">Meus subordinados diretos<br><span>0Pessoa</span> (Válido <span>0Pessoa</span>)</div>
+            <a href="#" class="details-link">Detalhes &gt;</a>
+        </div>
+    </div>
+
+    <!-- GRADE DE BAÚS -->
+    <div class="grid-container">
+        <!-- Linha 1 -->
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">30,00</div></div>
+            <div class="promo-text">Promoção <span>1</span><br>Pessoa</div>
+            <div class="item-arrow">&gt;</div>
+        </div>
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">30,00</div></div>
+            <div class="promo-text">Promoção <span>2</span><br>Pessoa</div>
+            <div class="item-arrow">&gt;</div>
+        </div>
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">30,00</div></div>
+            <div class="promo-text">Promoção <span>3</span><br>Pessoa</div>
+            <div class="item-arrow">&gt;</div>
+        </div>
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">30,00</div></div>
+            <div class="promo-text">Promoção <span>4</span><br>Pessoa</div>
+        </div>
+
+        <!-- Linha 2 -->
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">30,00</div></div>
+            <div class="promo-text">Promoção <span>5</span><br>Pessoa</div>
+            <div class="item-arrow">&gt;</div>
+        </div>
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">55,00</div></div>
+            <div class="promo-text">Promoção <span>6</span><br>Pessoa</div>
+            <div class="item-arrow">&gt;</div>
+        </div>
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">55,00</div></div>
+            <div class="promo-text">Promoção <span>7</span><br>Pessoa</div>
+            <div class="item-arrow">&gt;</div>
+        </div>
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">55,00</div></div>
+            <div class="promo-text">Promoção <span>8</span><br>Pessoa</div>
+        </div>
+
+        <!-- Linha 3 -->
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">55,00</div></div>
+            <div class="promo-text">Promoção <span>9</span><br>Pessoa</div>
+            <div class="item-arrow">&gt;</div>
+        </div>
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">55,00</div></div>
+            <div class="promo-text">Promoção <span>10</span><br>Pessoa</div>
+            <div class="item-arrow">&gt;</div>
+        </div>
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">150,00</div></div>
+            <div class="promo-text">Promoção <span>20</span><br>Pessoa</div>
+            <div class="item-arrow">&gt;</div>
+        </div>
+        <div class="grid-item">
+            <div class="chest"><div class="chest-value">150,00</div></div>
+            <div class="promo-text">Promoção <span>30</span><br>Pessoa</div>
+        </div>
+    </div>
+
+    <!-- CONDIÇÕES E REGRAS -->
+    <div class="info-section">
+        <div class="section-title">O que é o número de promoção efetiva? (Preenchendo as seguintes condições)</div>
+        
+        <div class="cond-row">
+            <div>Depósito Total do Downline</div>
+            <div class="cond-value">≥30,00</div>
+        </div>
+        <div class="cond-row" style="border: none;">
+            <div>Giro Total Válido do Downline</div>
+            <div class="cond-value">≥200,00</div>
+        </div>
+
+        <div class="regra-title">Regras do evento</div>
+        <div class="regra-text">1. Convide amigos para reivindicar bônus. Quanto mais pessoas você convidar, mais bônus você receberá;</div>
+        <div class="regra-text">2. Os bônus precisam ser reivindicados manualmente. Após a expiração, os bônus serão distribuídos automaticamente e podem ser aproveitados junto com bônus e comissões de outros agentes;</div>
+        <div class="regra-text">3. Os bônus (excluindo o principal) exigem 1 vezes de apostas válidas para serem sacados;</div>
+        <div class="regra-text">4. Somente o proprietário da conta pode realizar operações manuais normais, caso contrário, o bônus será cancelado ou deduzido, congelado ou até mesmo colocado na lista negra;</div>
+        <div class="regra-text">5. Para evitar diferenças na compreensão do texto, a plataforma se reserva o direito final de interpretação desta atividade.</div>
+    </div>
+
+</body>
+  </html>
+  
