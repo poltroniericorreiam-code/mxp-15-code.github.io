@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promoções</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        html, body { max-width: 100%; overflow-x: hidden; }
+        .scroll-menu-container {
+            width: 100%; overflow-x: auto; overflow-y: hidden;
+            background-color: transparent; border-radius: 8px;
+            margin-bottom: 20px; padding: 12px 0; position: relative; z-index: 999;
+            touch-action: pan-x; -webkit-overflow-scrolling: touch;
+        }
+        .grid-bau {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 10px; padding: 10px; background-color: #0b111e;
+            border-radius: 12px; margin: 10px;
+        }
+        .bau-item { position: relative; text-align: center; }
+        .bau-texto {
+            position: absolute; top: 60%; left: 50%;
+            transform: translate(-50%, -50%); color: white;
+            font-size: 9px; font-weight: bold; width: 100%; pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu Scroll -->
+    <div class="scroll-menu-container">
+        <div class="scroll-menu-list">
+            <button class="menu-tab">Tab 1</button>
+            <button class="menu-tab">Tab 2</button>
+            <button class="menu-tab">Tab 3</button>
+            <button class="menu-tab">Tab 4</button>
+            <button class="menu-tab">Tab 5</button>
+            <button class="menu-tab">Tab 6</button>
+        </div>
+    </div>
+
+    <!-- Cabeçalho -->
+    <div style="background-color: #0b111e; margin-bottom: 20px;">
+        <div style="margin-bottom: 10px;">
+            <img src="IMG-20260707-WA.jpg" alt="Logo">
+        </div>
+        <h2 style="color: #ffffff;">Promoções MXP$15</h2>
+    </div>
+
+    <p>Convide amigos e ganhe bônus</p>
+
+    <!-- Grade de Baús -->
+    <div class="grid-bau">
+        <div class="bau-item">
+            <img src="treasureBoxClose.png" style="width: 75px; height: 75px; object-fit: contain;">
+            <div class="bau-texto">Promo 1<br><span style="color: #f6ad55;">R$ 30</span></div>
+        </div>
+        <div class="bau-item">
+            <img src="treasureBoxClose.png" style="width: 75px; height: 75px; object-fit: contain;">
+            <div class="bau-texto">Promo 2<br><span style="color: #f6ad55;">R$ 30</span></div>
+        </div>
+        <div class="bau-item">
+            <img src="treasureBoxClose.png" style="width: 75px; height: 75px; object-fit: contain;">
+            <div class="bau-texto">Promo 3<br><span style="color: #f6ad55;">R$ 30</span></div>
+        </div>
+        <div class="bau-item">
+            <img src="treasureBoxClose.png" style="width: 75px; height: 75px; object-fit: contain;">
+            <div class="bau-texto">Promo 4<br><span style="color: #f6ad55;">R$ 30</span></div>
+        </div>
+    </div>
+
+    <!-- Botões Originais -->
+    <br>
+    <button onclick="window.location.href='convite1.html'">
+        Convide 1 pessoa = R$30
+    </button>
+    <br><br>
+    <button onclick="window.location.href='convite10.html'">
+        Convide 10 pessoas = R$300
+    </button>
+    <br><br>
+    <button onclick="window.location.href='convite100.html'">
+        Convide 100 pessoas = R$1000
+    </button>
+    <br><br>
+    <button onclick="window.location.href='index.html'">
+        Voltar
+    </button>
+
+</body>
+</html>
