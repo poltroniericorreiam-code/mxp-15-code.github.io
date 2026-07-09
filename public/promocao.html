@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promoções - MXP$15</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Ajustes específicos para o topo e abas */
+        .promo-header { background: #0b1e33; padding: 15px 10px; border-bottom: 1px solid #23283c; }
+        .tabs { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+        .tabs button { background: transparent; border: none; color: #8892b0; cursor: pointer; padding: 5px 10px; white-space: nowrap; }
+        .tabs button.active { color: white; border-bottom: 2px solid #0076ff; font-weight: bold; }
+        
+        .promo-content { padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .banner-card { width: 100%; max-width: 400px; margin-bottom: 15px; }
+        .banner-card img { width: 100%; border-radius: 12px; display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO DE ABAS -->
+    <header class="promo-header">
+        <div class="tabs">
+            <button class="active">Eventos</button>
+            <button>Rebate</button>
+            <button>VIP</button>
+            <button>Código de Resgate</button>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main class="promo-content">
+        <div class="banner-card">
+            <img src="public/IMG_20260708_172307.png" alt="Banner Evento">
+        </div>
+        <!-- Você pode adicionar mais banners abaixo aqui -->
+    </main>
+
+    <!-- MENU INFERIOR -->
+    <nav class="menu-bottom">
+        <a href="home.html">🏠 <span>Início</span></a>
+        <a href="promocao.html" class="active">🎁 <span>Promoção</span></a>
+        <a href="convite.html">👥 <span>Convidar</span></a>
+        <a href="perfil.html">👤 <span>Perfil</span></a>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>
