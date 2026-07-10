@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promoções</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; background-color: #0a1424; color: white; }
+        
+        /* Container dos Cards */
+        .container { padding: 15px; padding-bottom: 80px; }
+        
+        /* Estilo do Card */
+        .promo-card {
+            background: linear-gradient(135deg, #0055ff, #002266);
+            border: 2px solid #3399ff;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .texto h2 { margin: 0; color: #ffcc00; font-size: 1.2rem; }
+        .texto p { margin: 5px 0; font-size: 0.9rem; }
+
+        /* Navegação Inferior */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #111e33;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #333;
+        }
+        .nav-item { text-align: center; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Card 1 -->
+        <div class="promo-card">
+            <div class="texto">
+                <h2>R$ 2777</h2>
+                <p>RECOMPENSA DE RECARGA</p>
+            </div>
+            <div>[Imagem Aqui]</div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="promo-card">
+            <div class="texto">
+                <h2>R$ 30 BÔNUS</h2>
+                <p>CONVIDE UM AMIGO</p>
+            </div>
+            <div>[Imagem Aqui]</div>
+        </div>
+    </div>
+
+    <!-- Navegação Inferior -->
+    <nav class="nav-bar">
+        <div class="nav-item">Início</div>
+        <div class="nav-item">Promoção</div>
+        <div class="nav-item">Depósito</div>
+        <div class="nav-item">Saque</div>
+    </nav>
+
+</body>
+</html>
 
