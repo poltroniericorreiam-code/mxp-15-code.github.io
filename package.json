@@ -1,0 +1,16 @@
+{
+  "name": "mxp-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistema MXP com integração Asaas",
+  "scripts": {
+    "start": "vercel dev",
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
