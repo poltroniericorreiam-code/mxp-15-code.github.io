@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Jogador</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --bg: #0f1521; --card: #1c2637; --accent: #2ecc71; --text: #fff; }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; padding-bottom: 70px; }
+        
+        /* Header Profile */
+        .profile-header { padding: 20px; display: flex; align-items: center; gap: 15px; }
+        .avatar { width: 60px; height: 60px; border-radius: 10px; background: #333; }
+        .user-info { flex-grow: 1; }
+        
+        /* Buttons */
+        .action-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px; }
+        .btn { padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; cursor: pointer; border: none; }
+        .btn-saque { background: #2c3e50; }
+        .btn-deposito { background: #2ecc71; }
+
+        /* VIP Card */
+        .vip-card { background: var(--card); margin: 20px; padding: 15px; border-radius: 10px; }
+        .progress-bg { height: 8px; background: #0f1521; border-radius: 4px; margin-top: 10px; }
+        .progress-fill { height: 100%; background: #f39c12; width: 36%; border-radius: 4px; }
+
+        /* Menu List */
+        .menu-item { background: var(--card); margin: 10px 20px; padding: 15px; display: flex; align-items: center; justify-content: space-between; border-radius: 8px; }
+        
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--card); display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #333; }
+    </style>
+</head>
+<body>
+
+    <div class="profile-header">
+        <div class="avatar" style="background: url('avatar.jpg') center/cover;"></div>
+        <div class="user-info">
+            <div>ID: 1000535545</div>
+            <div style="font-size: 1.5em; font-weight: bold;">R$ 0,56 <i class="fa fa-refresh"></i></div>
+        </div>
+    </div>
+
+    <div class="action-btns">
+        <button class="btn btn-saque">Saque</button>
+        <button class="btn btn-deposito">Depósito</button>
+    </div>
+
+    <div class="vip-card">
+        <div>Siga VIP4 | Ainda precisa apostar 6.384,05</div>
+        <div class="progress-bg"><div class="progress-fill"></div></div>
+        <small>3.615,95 / 10.000,00</small>
+    </div>
+
+    <div class="menu-item"><span><i class="fa fa-list"></i> Relatórios</span> <i class="fa fa-chevron-right"></i></div>
+    <div class="menu-item"><span><i class="fa fa-users"></i> Convidar</span> <span>Ganhe R$50 ></span></div>
+    <div class="menu-item"><span><i class="fa fa-gift"></i> Código de Resgate</span> <i class="fa fa-chevron-right"></i></div>
+    <div class="menu-item"><span><i class="fa fa-headset"></i> Suporte</span> <span style="background: red; padding: 2px 8px; border-radius: 50%;">79</span></div>
+
+    <div class="bottom-nav">
+        <i class="fa fa-gamepad"></i>
+        <i class="fa fa-tags"></i>
+        <i class="fa fa-wallet" style="color: #2ecc71;"></i>
+        <i class="fa fa-credit-card"></i>
+        <i class="fa fa-user" style="color: #2ecc71;"></i>
+    </div>
+
+</body>
+</html>
