@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root { --bg: #0b0e14; --card: #161b22; --gold: #d4af37; --text: #ffffff; --grey: #8b949e; }
+        body { background-color: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; padding-bottom: 100px; }
+
+        /* Header VIP */
+        .vip-card { background: var(--card); margin: 15px; padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #252a33; }
+        .btn-main { background: var(--gold); color: #000; padding: 8px 15px; border-radius: 6px; font-weight: bold; border: none; cursor: pointer; }
+
+        /* Abas (Bônus, Diário, Semanal) */
+        .tab-menu { display: flex; justify-content: space-between; padding: 0 20px; margin-bottom: 20px; }
+        .tab-item { color: var(--grey); padding-bottom: 5px; cursor: pointer; border-bottom: 2px solid transparent; }
+        .tab-item.active { color: var(--text); border-bottom: 2px solid var(--gold); }
+
+        /* Tabela de Níveis */
+        .row { display: flex; justify-content: space-between; padding: 15px 20px; border-bottom: 1px solid #252a33; align-items: center; }
+        .row.header { color: var(--grey); font-size: 0.8em; }
+        .level-badge { background: #252a33; padding: 4px 8px; border-radius: 4px; font-weight: bold; color: var(--gold); }
+
+        /* Botão Fixo Profissional */
+        .sticky-btn { position: fixed; bottom: 80px; left: 20px; right: 20px; background: #30363d; color: #fff; padding: 15px; text-align: center; border-radius: 8px; font-weight: bold; border: 1px solid var(--grey); }
+    </style>
+</head>
+<body>
+
+    <div class="vip-card">
+        <div><strong>Siga VIP4</strong><br><small style="color:var(--grey)">Ainda precisa apostar 5.501,95</small></div>
+        <div>
+            <button class="btn-main" style="background:#fff">Coletar Tudo</button><br>
+            <button class="btn-main" style="background:var(--gold); margin-top:5px">Histórias</button>
+        </div>
+    </div>
+
+    <div class="tab-menu">
+        <div class="tab-item active">Bônus</div>
+        <div class="tab-item">Bônus Diário</div>
+        <div class="tab-item">Bônus Semanal</div>
+    </div>
+
+    <div class="row header"><span>Nível</span><span>Aposta necessária</span><span>Bônus</span></div>
+    <div class="row"><span><b class="level-badge">V4</b></span><span>10.000,00</span><span style="color:var(--gold)">15,00</span></div>
+    <div class="row"><span><b class="level-badge">V5</b></span><span>30.000,00</span><span style="color:var(--gold)">30,00</span></div>
+    <div class="row"><span><b class="level-badge">V6</b></span><span>60.000,00</span><span style="color:var(--gold)">40,00</span></div>
+
+    <div class="sticky-btn">Reclamar Recompensa de Upgrade</div>
+
+</body>
+</html>
