@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root { --bg: #0b0e14; --card-bg: #161b22; --text: #ffffff; --text-muted: #8b949e; --gold: #d4af37; }
+        body { background-color: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; padding: 0; }
+
+        /* Cabeçalho do VIP */
+        .header-vip { background: var(--card-bg); padding: 15px; margin: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .info-vip h3 { margin: 0; font-size: 0.9em; }
+        .info-vip p { margin: 5px 0 0; font-size: 0.75em; color: var(--text-muted); }
+        .btn-group { display: flex; flex-direction: column; gap: 5px; }
+        .btn-top { border: none; padding: 5px 12px; border-radius: 4px; font-size: 0.75em; cursor: pointer; }
+
+        /* Abas */
+        .tabs { display: flex; padding: 10px 20px; gap: 20px; color: var(--text-muted); font-size: 0.85em; border-bottom: 1px solid #252a33; margin-bottom: 10px; }
+        .tabs .active { color: var(--text); border-bottom: 2px solid var(--gold); padding-bottom: 5px; }
+
+        /* Tabela */
+        .table-container { padding: 0 20px; }
+        .table-header { display: flex; justify-content: space-between; color: var(--text-muted); font-size: 0.7em; margin-bottom: 10px; }
+        .row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #252a33; font-size: 0.9em; }
+        .lvl-tag { color: var(--gold); font-weight: bold; }
+
+        /* Botão Fixo */
+        .sticky-action { position: fixed; bottom: 20px; left: 20px; right: 20px; background: #252a33; padding: 15px; text-align: center; border-radius: 6px; font-size: 0.9em; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="header-vip">
+        <div class="info-vip">
+            <h3>Siga VIP4</h3>
+            <p>Ainda precisa apostar 5.501,95</p>
+        </div>
+        <div class="btn-group">
+            <button class="btn-top" style="background:#fff;">Coletar Tudo</button>
+            <button class="btn-top" style="background:var(--gold);">Histórias</button>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <span class="active">Bônus</span>
+        <span>Bônus Diário</span>
+        <span>Bônus Semanal</span>
+    </div>
+
+    <div class="table-container">
+        <div class="table-header">
+            <span>Nível</span>
+            <span>Aposta necessária</span>
+            <span>Bônus</span>
+        </div>
+        
+        <div class="row">
+            <span class="lvl-tag">V4</span>
+            <span>10.000,00</span>
+            <span style="color:var(--gold)">15,00</span>
+        </div>
+        <div class="row">
+            <span class="lvl-tag">V5</span>
+            <span>30.000,00</span>
+            <span style="color:var(--gold)">30,00</span>
+        </div>
+        <div class="row">
+            <span class="lvl-tag">V6</span>
+            <span>60.000,00</span>
+            <span style="color:var(--gold)">40,00</span>
+        </div>
+    </div>
+
+    <div class="sticky-action">Reclamar Recompensa de Upgrade</div>
+
+</body>
+</html>
