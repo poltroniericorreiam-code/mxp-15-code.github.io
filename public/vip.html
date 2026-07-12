@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Níveis VIP - Casino Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --bg-color: #0b0e14; --card-bg: #161b22; --accent-gold: #d4af37; --text-main: #ffffff; --text-muted: #8b949e; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: sans-serif; margin: 0; padding-bottom: 100px; }
+        
+        .header { padding: 20px; background: #1c2431; text-align: center; font-weight: bold; font-size: 1.2em; border-bottom: 1px solid #30363d; }
+        
+        .vip-table { width: 100%; border-collapse: collapse; }
+        .vip-row { display: flex; align-items: center; padding: 15px 20px; border-bottom: 1px solid #30363d; }
+        .col-nivel { width: 30%; display: flex; align-items: center; gap: 10px; font-weight: bold; }
+        .col-aposta { width: 40%; color: var(--text-muted); text-align: center; font-size: 0.9em; }
+        .col-bonus { width: 30%; color: var(--accent-gold); text-align: right; font-weight: bold; }
+
+        .fixed-btn { position: fixed; bottom: 20px; left: 20px; right: 20px; background: #30363d; color: white; padding: 15px; text-align: center; border-radius: 8px; font-weight: bold; cursor: pointer; border: 1px solid var(--accent-gold); }
+    </style>
+</head>
+<body>
+
+    <div class="header"><i class="fa-solid fa-chevron-left" style="float:left; cursor:pointer;" onclick="history.back()"></i> VIP</div>
+
+    <div class="vip-table" id="vip-container">
+        </div>
+
+    <div class="fixed-btn">Reclamar Recompensa de Upgrade</div>
+
+    <script>
+        const vipData = [
+            {v: "V0", a: "0,00", b: "0,00"}, {v: "V1", a: "100,00", b: "1,00"}, {v: "V2", a: "1.000,00", b: "3,00"},
+            {v: "V3", a: "3.000,00", b: "10,00"}, {v: "V4", a: "10.000,00", b: "15,00"}, {v: "V5", a: "30.000,00", b: "30,00"},
+            {v: "V6", a: "60.000,00", b: "40,00"}, {v: "V7", a: "100.000,00", b: "55,00"}, {v: "V8", a: "300.000,00", b: "155,00"},
+            {v: "V9", a: "600.000,00", b: "255,00"}, {v: "V10", a: "1.000.000,00", b: "355,00"}, {v: "V11", a: "2.000.000,00", b: "555,00"},
+            {v: "V12", a: "3.000.000,00", b: "755,00"}, {v: "V13", a: "4.000.000,00", b: "855,00"}, {v: "V14", a: "5.000.000,00", b: "955,00"},
+            {v: "V15", a: "6.000.000,00", b: "1.055,00"}, {v: "V16", a: "8.000.000,00", b: "1.255,00"}, {v: "V17", a: "10.000.000,00", b: "1.555,00"},
+            {v: "V18", a: "12.000.000,00", b: "2.055,00"}, {v: "V19", a: "14.000.000,00", b: "2.355,00"}, {v: "V20", a: "16.000.000,00", b: "2.655,00"},
+            {v: "V21", a: "18.000.000,00", b: "3.055,00"}, {v: "V22", a: "20.000.000,00", b: "3.555,00"}, {v: "V23", a: "23.000.000,00", b: "4.055,00"},
+            {v: "V24", a: "26.000.000,00", b: "5.055,00"}, {v: "V25", a: "30.000.000,00", b: "6.055,00"}, {v: "V26", a: "35.000.000,00", b: "7.055,00"},
+            {v: "V27", a: "40.000.000,00", b: "8.055,00"}, {v: "V28", a: "45.000.000,00", b: "9.055,00"}, {v: "V29", a: "50.000.000,00", b: "11.555,00"},
+            {v: "V30", a: "60.000.000,00", b: "12.555,00"}, {v: "V31", a: "70.000.000,00", b: "15.554,00"}, {v: "V32", a: "80.000.000,00", b: "20.555,00"},
+            {v: "V33", a: "90.000.000,00", b: "25.555,00"}, {v: "V34", a: "100.000.000,00", b: "35.555,00"}, {v: "V35", a: "120.000.000,00", b: "55.555,00"}
+        ];
+
+        const container = document.getElementById('vip-container');
+        vipData.forEach(item => {
+            container.innerHTML += `
+                <div class="vip-row">
+                    <div class="col-nivel"><i class="fa-solid fa-crown" style="color: ${item.v === 'V0' ? '#555' : 'var(--accent-gold)'};"></i> ${item.v}</div>
+                    <div class="col-aposta">${item.a}</div>
+                    <div class="col-bonus">${item.b}</div>
+                </div>`;
+        });
+    </script>
+</body>
+</html>
