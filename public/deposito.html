@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depósito - Casino Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --bg-color: #0b0e14; --card-bg: #161b22; --accent-blue: #007bff; --text-main: #ffffff; --text-muted: #8b949e; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: sans-serif; margin: 0; padding: 0 20px; padding-bottom: 30px; }
+
+        .header { padding: 20px 0; display: flex; align-items: center; font-weight: bold; font-size: 1.2em; }
+        .tab { color: var(--text-muted); margin-bottom: 20px; border-bottom: 2px solid var(--accent-blue); display: inline-block; padding-bottom: 5px; color: var(--text-main); }
+
+        .promo-box { background: #1c2431; padding: 15px; border-radius: 8px; font-size: 0.85em; margin-bottom: 20px; color: #ccc; border: 1px solid #30363d; }
+        
+        /* Input Manual */
+        .input-group { background: #161b22; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
+        
+        .grid-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .value-btn { padding: 15px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; text-align: center; cursor: pointer; color: #fff; transition: 0.2s; }
+        .value-btn.selected { border: 1px solid var(--accent-blue); background: #1c2431; color: var(--accent-blue); }
+        
+        .btn-deposit { width: 100%; padding: 18px; background: var(--accent-blue); border: none; border-radius: 8px; color: white; font-weight: bold; font-size: 1em; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <i class="fa-solid fa-chevron-left" style="cursor:pointer;" onclick="history.back()"></i> 
+        <span style="margin: 0 auto;">Depósito</span>
+    </div>
+
+    <div class="tab">Depósito on-line</div>
+
+    <div class="promo-box">
+        💰 CONVIDE 1 PESSOA E GANHE R$ 30! Após o depósito ser bem-sucedido, lembre-se de reivindicar o evento "Bônus de depósito diário de R$ 2777"!🎁
+    </div>
+
+    <div class="input-group">
+        <span style="color: var(--text-muted);">R$</span>
+        <input type="number" id="valor-input" placeholder="10 - 15.000" 
+               style="background: transparent; border: none; color: white; width: 100%; font-size: 1.2em; margin-left: 10px; outline: none;">
+        <i class="fa-solid fa-xmark" style="cursor:pointer; color: var(--text-muted);" onclick="limparSelecao()"></i>
+    </div>
+
+    <div class="grid-values">
+        <div class="value-btn" onclick="selecionarValor(15)">15,00</div>
+        <div class="value-btn" onclick="selecionarValor(35)">35,00</div>
+        <div class="value-btn" onclick="selecionarValor(60)">60,00</div>
+        <div class="value-btn" onclick="selecionarValor(130)">130,00</div>
+        <div class="value-btn" onclick="selecionarValor(200)">200,00</div>
+        <div class="value-btn" onclick="selecionarValor(500)">500,00</div>
+        <div class="value-btn" onclick="selecionarValor(1000)">1.000,00</div>
+        <div class="value-btn" onclick="selecionarValor(5000)">5.000,00</div>
+        <div class="value-btn" onclick="selecionarValor(15000)">15.000,00</div>
+    </div>
+
+    <button class="btn-deposit" onclick="iniciarPagamento()">Depositar Agora</button>
+
+    <script>
+        function selecionarValor(valor) {
+            document.getElementById('valor-input').value = valor;
+            document.querySelectorAll('.value-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
+        }
+
+        function limparSelecao() {
+            document.getElementById('valor-input').value = '';
+            document.querySelectorAll('.value-btn').forEach(btn => btn.classList.remove('selected'));
+        }
+
+        function iniciarPagamento() {
+            let valor = parseFloat(document.getElementById('valor-input').value);
+            
+            if (isNaN(valor) || valor < 10) {
+                alert("O valor mínimo para depósito é R$ 10,00.");
+            } else if (valor > 15000) {
+                alert("O valor máximo para depósito é R$ 15.000,00.");
+            } else {
+                // Redireciona para a página de QR Code passando o valor
+                window.location.href = "qrcode.html?valor=" + valor;
+            }
+        }
+    </script>
+</body>
+</html>
