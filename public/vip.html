@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Níveis VIP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --bg-color: #0b0e14; --card-bg: #161b22; --accent-gold: #d4af37; --text-main: #ffffff; --text-muted: #8b949e; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: sans-serif; margin: 0; padding-bottom: 100px; }
+        
+        .header { padding: 20px; background: #1c2431; text-align: center; font-weight: bold; position: sticky; top: 0; }
+        
+        /* Tabela VIP */
+        .vip-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        .vip-row { display: flex; align-items: center; padding: 15px 20px; border-bottom: 1px solid #30363d; }
+        .col-nivel { flex: 1; display: flex; align-items: center; gap: 10px; font-weight: bold; }
+        .col-aposta { flex: 2; color: var(--text-muted); text-align: center; }
+        .col-bonus { flex: 1; color: var(--accent-gold); text-align: right; font-weight: bold; }
+
+        /* Botão Reclamar */
+        .fixed-btn { position: fixed; bottom: 20px; left: 20px; right: 20px; background: #444; color: white; padding: 15px; text-align: center; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="header">VIP</div>
+
+    <div class="vip-table">
+        <div class="vip-row" style="background: #1c2431; font-size: 0.8em; color: var(--text-muted);">
+            <div class="col-nivel">Nível</div>
+            <div class="col-aposta">Aposta necessária</div>
+            <div class="col-bonus">Bônus</div>
+        </div>
+
+        <div class="vip-row"><div class="col-nivel"><i class="fa-solid fa-crown" style="color: gray;"></i> V0</div><div class="col-aposta">0,00</div><div class="col-bonus">0,00</div></div>
+        <div class="vip-row"><div class="col-nivel"><i class="fa-solid fa-crown" style="color: silver;"></i> V1</div><div class="col-aposta">100,00</div><div class="col-bonus">1,00</div></div>
+        <div class="vip-row"><div class="col-nivel"><i class="fa-solid fa-crown" style="color: silver;"></i> V2</div><div class="col-aposta">1.000,00</div><div class="col-bonus">3,00</div></div>
+        <div class="vip-row"><div class="col-nivel"><i class="fa-solid fa-crown" style="color: #cd7f32;"></i> V3</div><div class="col-aposta">3.000,00</div><div class="col-bonus">10,00</div></div>
+        </div>
+
+    <div class="fixed-btn">Reclamar Recompensa de Upgrade</div>
+
+</body>
+</html>
