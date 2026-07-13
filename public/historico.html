@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico - Casino Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --bg-color: #0b0e14; --card-bg: #161b22; --accent-gold: #d4af37; --text-main: #ffffff; --text-muted: #8b949e; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: sans-serif; margin: 0; padding-bottom: 90px; }
+
+        /* Menu de Abas Superior */
+        .tabs { display: flex; overflow-x: auto; background: #1c2431; padding: 10px; border-bottom: 1px solid #30363d; white-space: nowrap; }
+        .tab { padding: 10px 15px; color: var(--text-muted); cursor: pointer; font-size: 0.9em; }
+        .tab.active { color: var(--accent-gold); border-bottom: 2px solid var(--accent-gold); }
+
+        /* Filtro e Bônus */
+        .filter-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
+        .date-filter { background: #1c2431; padding: 5px 10px; border-radius: 5px; font-size: 0.85em; cursor: pointer; }
+        .bonus-info { color: var(--accent-gold); font-size: 0.9em; font-weight: bold; }
+
+        /* Tabela de Cabeçalho */
+        .table-header { display: flex; justify-content: space-between; padding: 10px 20px; color: var(--text-muted); font-size: 0.8em; }
+
+        /* Estado "Sem Registros" */
+        .no-records { display: flex; flex-direction: column; align-items: center; margin-top: 50px; color: var(--text-muted); }
+        .no-records i { font-size: 3em; margin-bottom: 10px; opacity: 0.5; }
+
+        .navbar { position: fixed; bottom: 0; width: 100%; background: #0b0e14; border-top: 1px solid #30363d; display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000; }
+        .nav-item { color: var(--text-muted); font-size: 0.75em; text-align: center; cursor: pointer; }
+        .nav-item.active { color: var(--accent-gold); }
+    </style>
+</head>
+<body>
+
+    <div class="tabs">
+        <div class="tab" onclick="location.href='rebate.html'">Rebate</div>
+        <div class="tab" onclick="location.href='vip.html'">VIP</div>
+        <div class="tab" onclick="location.href='codigo.html'">Código</div>
+        <div class="tab active" onclick="location.href='historico.html'">Histórico</div>
+        <div class="tab" onclick="location.href='pendente.html'">Pendente</div>
+    </div>
+
+    <div class="filter-header">
+        <div class="date-filter"><i class="fa-solid fa-chevron-down"></i> Hoje</div>
+        <div class="bonus-info">Bônus 0,00</div>
+    </div>
+
+    <div class="table-header">
+        <span>Tempo</span>
+        <span>Nome do Evento</span>
+        <span>Evento de Recompensa</span>
+        <span>Fonte</span>
+    </div>
+
+    <div class="no-records">
+        <i class="fa-solid fa-file-lines"></i>
+        <span>Sem Registros</span>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-item" onclick="location.href='index.html'"><i class="fa-solid fa-house" style="display:block; font-size: 1.4em; margin-bottom: 4px;"></i>Inicio</div>
+        <div class="nav-item active" onclick="location.href='promocao.html'"><i class="fa-solid fa-gift" style="display:block; font-size: 1.4em; margin-bottom: 4px;"></i>Promoção</div>
+        <div class="nav-item" onclick="location.href='deposito.html'"><i class="fa-solid fa-wallet" style="display:block; font-size: 1.4em; margin-bottom: 4px;"></i>Depósito</div>
+        <div class="nav-item" onclick="location.href='saque.html'"><i class="fa-solid fa-arrow-right-arrow-left" style="display:block; font-size: 1.4em; margin-bottom: 4px;"></i>Saque</div>
+        <div class="nav-item" onclick="location.href='perfil.html'"><i class="fa-solid fa-user" style="display:block; font-size: 1.4em; margin-bottom: 4px;"></i>Perfil</div>
+    </nav>
+
+</body>
+</html>
