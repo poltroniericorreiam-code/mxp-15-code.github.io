@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indique Amigos</title>
+    <style>
+        body { background-color: #0b0e14; color: #fff; font-family: sans-serif; padding: 20px; margin: 0; }
+        .header { font-weight: bold; font-size: 1.4em; margin-bottom: 20px; }
+        
+        /* Grade dos Baús (4 por linha) */
+        .grid-bau { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 10px; 
+            margin-bottom: 30px; 
+        }
+        .bau-item { 
+            background: #161b22; 
+            padding: 10px 5px; 
+            border-radius: 8px; 
+            text-align: center; 
+            border: 1px solid #30363d;
+        }
+        .bau-img { width: 100%; max-width: 60px; }
+        .valor { color: #ffcc00; font-weight: bold; font-size: 0.9em; display: block; }
+        .meta { font-size: 0.7em; color: #8b949e; }
+
+        .btn-copiar { 
+            width: 100%; background: #007bff; color: white; padding: 15px; 
+            border: none; border-radius: 8px; font-weight: bold; cursor: pointer; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">Indique amigos para receber...</div>
+
+    <div class="grid-bau" id="container-baus">
+        </div>
+
+    <button class="btn-copiar" onclick="copiarLink()">Copiar Link de Convite</button>
+
+    <script>
+        // Dados das metas de convite
+        const metas = [
+            { id: 1, valor: "30,00", meta: 1 },
+            { id: 2, valor: "30,00", meta: 2 },
+            { id: 3, valor: "30,00", meta: 3 },
+            { id: 4, valor: "30,00", meta: 4 },
+            { id: 5, valor: "30,00", meta: 5 },
+            { id: 6, valor: "55,00", meta: 6 }
+            // Adicione quantos quiser aqui...
+        ];
+
+        let convitesReais = 0; // Isso virá do seu banco de dados
+
+        function renderizar() {
+            const container = document.getElementById('container-baus');
+            metas.forEach(item => {
+                const liberado = convitesReais >= item.meta;
+                container.innerHTML += `
+                    <div class="bau-item">
+                        <img class="bau-img" src="${liberado ? 'treasureBoxOpen.png' : 'treasureBoxClose.png'}">
+                        <span class="valor">R$ ${item.valor}</span>
+                        <span class="meta">${item.meta} Pessoas</span>
+                    </div>
+                `;
+            });
+        }
+
+        function copiarLink() {
+            navigator.clipboard.writeText("https://seusite.com/ref=123");
+            alert("Link copiado!");
+        }
+
+        window.onload = renderizar;
+    </script>
+</body>
+</html>
