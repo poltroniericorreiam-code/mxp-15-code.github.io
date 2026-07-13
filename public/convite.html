@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indique Amigos</title>
+    <style>
+        :root { --bg: #0b0e14; --card: #161b22; --accent: #007bff; --text: #fff; --text-muted: #8b949e; --gold: #ffcc00; }
+        body { background-color: var(--bg); color: var(--text); font-family: sans-serif; padding: 15px; margin: 0; }
+        
+        .header { font-weight: bold; font-size: 1.2em; margin-bottom: 20px; }
+        
+        /* Grade de Baús com ícone de seta ">" */
+        .grid-bau { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 20px; }
+        .bau-item { background: var(--card); padding: 8px 2px; border-radius: 8px; text-align: center; border: 1px solid #30363d; position: relative; }
+        .bau-img { width: 90%; max-width: 50px; }
+        .valor { color: var(--gold); font-weight: bold; font-size: 0.75em; display: block; }
+        .meta { font-size: 0.65em; color: var(--text-muted); }
+
+        .btn-copiar { width: 100%; background: var(--accent); color: white; padding: 15px; border: none; border-radius: 8px; font-weight: bold; margin-bottom: 20px; }
+        
+        .info-box { background: var(--card); padding: 15px; border-radius: 8px; font-size: 0.85em; }
+        .regras-lista { color: var(--text-muted); line-height: 1.6; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">Indique amigos para receber...</div>
+
+    <div class="grid-bau" id="container-baus"></div>
+
+    <button class="btn-copiar" onclick="copiarLink()">Copiar Link de Convite</button>
+
+    <div class="info-box">
+        <strong>O que é o número de promoção efetiva?</strong>
+        <p>Depósito Total do Downline: ≥30,00 <br> Giro Total Válido do Downline: ≥200,00</p>
+        
+        <div class="regras-lista">
+            <strong>Regras do evento</strong><br>
+            1. Convide amigos para reivindicar bônus.<br>
+            2. Os bônus devem ser reivindicados manualmente.<br>
+            3. Apenas o proprietário da conta pode realizar operações.<br>
+            4. A plataforma reserva o direito final de interpretação.
+        </div>
+    </div>
+
+    <script>
+        // Lista completa de metas conforme as fotos enviadas
+        const metas = [
+            { meta: 1, valor: "30,00" }, { meta: 2, valor: "30,00" }, { meta: 3, valor: "30,00" }, { meta: 4, valor: "30,00" },
+            { meta: 5, valor: "30,00" }, { meta: 6, valor: "55,00" }, { meta: 7, valor: "55,00" }, { meta: 8, valor: "55,00" },
+            { meta: 9, valor: "55,00" }, { meta: 10, valor: "55,00" }, { meta: 20, valor: "150,00" }, { meta: 30, valor: "150,00" },
+            { meta: 40, valor: "150,00" }, { meta: 50, valor: "150,00" }, { meta: 60, valor: "150,00" }, { meta: 70, valor: "150,00" },
+            { meta: 80, valor: "150,00" }, { meta: 90, valor: "150,00" }, { meta: 100, valor: "150,00" }, { meta: 1000, valor: "5.000,00" }
+        ];
+
+        let convitesReais = 0; // Este valor deve ser buscado no seu banco de dados
+
+        function renderizar() {
+            const container = document.getElementById('container-baus');
+            metas.forEach(item => {
+                const liberado = convitesReais >= item.meta;
+                container.innerHTML += `
+                    <div class="bau-item">
+                        <img class="bau-img" src="${liberado ? 'treasureBoxOpen.png' : 'treasureBoxClose.png'}">
+                        <span class="valor">R$ ${item.valor}</span>
+                        <span class="meta">${item.meta} Pessoas</span>
+                    </div>
+                `;
+            });
+        }
+
+        function copiarLink() {
+            navigator.clipboard.writeText("https://seusite.com/convite?id=123");
+            alert("Link de convite copiado!");
+        }
+
+        window.onload = renderizar;
+    </script>
+</body>
+</html>
