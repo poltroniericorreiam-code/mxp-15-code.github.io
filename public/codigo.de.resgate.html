@@ -1,0 +1,57 @@
+import React, { useState } from 'react';
+
+const CodigoDeResgate = () => {
+  const [codigo, setCodigo] = useState('');
+  const [status, setStatus] = useState(null); // 'sucesso' ou 'erro'
+  const [mensagem, setMensagem] = useState('');
+
+  const handleResgate = async () => {
+    // Simulação de chamada para sua API
+    if (codigo.trim() === "") {
+      setStatus('erro');
+      setMensagem("Por favor, digite um código.");
+      return;
+    }
+
+    // Aqui entra o fetch para o seu servidor
+    // Exemplo: const response = await fetch('/api/resgatar', { ... });
+    
+    // Simulação de lógica de sucesso
+    if (codigo.toUpperCase() === "BONUS2026") {
+      setStatus('sucesso');
+      setMensagem("Parabéns! R$ 20,00 foram creditados em sua conta.");
+    } else {
+      setStatus('erro');
+      setMensagem("Código inválido ou expirado.");
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center p-6 bg-[#0a1b2e] rounded-xl shadow-lg border border-[#1a2d42] max-w-sm mx-auto mt-10">
+      <h2 className="text-white text-xl font-bold mb-6">Código de Resgate</h2>
+      
+      <input 
+        type="text" 
+        className="w-full p-4 mb-4 bg-[#1a2d42] border border-[#2d4a66] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-500 transition-all"
+        placeholder="Digite o código aqui"
+        value={codigo}
+        onChange={(e) => setCodigo(e.target.value)}
+      />
+
+      <button 
+        onClick={handleResgate}
+        className="w-full p-4 bg-gradient-to-r from-yellow-600 to-yellow-400 text-[#0a1b2e] font-black rounded-lg shadow-md hover:scale-105 transition-transform"
+      >
+        RESGATAR AGORA
+      </button>
+
+      {mensagem && (
+        <div className={`mt-4 p-3 rounded w-full text-center font-bold ${status === 'sucesso' ? 'text-green-400 bg-green-900/20' : 'text-red-400 bg-red-900/20'}`}>
+          {mensagem}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CodigoDeResgate;
