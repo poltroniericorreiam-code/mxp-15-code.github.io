@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MXP$15 - Resgate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0a1b2e; color: white; font-family: sans-serif; }
+        .gold-gradient { background: linear-gradient(90deg, #d4af37, #f7ef8a); }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-sm bg-[#1a2d42] p-8 rounded-2xl shadow-2xl border border-[#2d4a66]">
+        <h2 class="text-2xl font-bold text-center mb-6 text-white">Código de Resgate</h2>
+        
+        <input type="text" id="codigoInput" 
+            class="w-full p-4 mb-4 bg-[#0a1b2e] border border-[#2d4a66] rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-[#d4af37]"
+            placeholder="Digite seu código aqui">
+
+        <button onclick="resgatar()" 
+            class="w-full p-4 gold-gradient text-[#0a1b2e] font-black rounded-lg shadow-md hover:scale-105 transition-transform uppercase">
+            Resgatar Agora
+        </button>
+
+        <p id="mensagem" class="mt-4 text-center font-bold h-6"></p>
+    </div>
+
+    <script>
+        function resgatar() {
+            const codigo = document.getElementById('codigoInput').value.trim();
+            const msgElement = document.getElementById('mensagem');
+
+            if (codigo === "") {
+                msgElement.innerText = "Digite um código!";
+                msgElement.className = "mt-4 text-center font-bold text-red-400";
+                return;
+            }
+
+            // Simulação de verificação
+            if (codigo.toUpperCase() === "MXP15") {
+                msgElement.innerText = "Sucesso! Bônus creditado.";
+                msgElement.className = "mt-4 text-center font-bold text-green-400";
+            } else {
+                msgElement.innerText = "Código inválido!";
+                msgElement.className = "mt-4 text-center font-bold text-red-400";
+            }
+        }
+    </script>
+</body>
+</html>
