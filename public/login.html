@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MXP$15</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <img src="4085.jpg" alt="Logo MXP$15" width="150">
+
+        <h1>LOGIN MXP$15</h1>
+
+        <input
+            type="text"
+            id="usuario"
+            placeholder="Usuário"
+            autocomplete="username"
+        >
+
+        <input
+            type="password"
+            id="senha"
+            placeholder="Senha"
+            autocomplete="current-password"
+        >
+
+        <button onclick="login()">
+            ENTRAR
+        </button>
+
+        <button onclick="window.location.href='cadastro.html'">
+            CRIAR CONTA
+        </button>
+
+    </div>
+
+    <script>
+
+        function login() {
+
+            const usuario = document.getElementById("usuario").value.trim();
+            const senha = document.getElementById("senha").value.trim();
+
+            if (!usuario || !senha) {
+                alert("Preencha todos os campos.");
+                return;
+            }
+
+            const usuarioSalvo = localStorage.getItem("usuario");
+            const senhaSalva = localStorage.getItem("senha");
+
+            if (usuario === usuarioSalvo && senha === senhaSalva) {
+
+                alert("Login realizado com sucesso!");
+                window.location.href = "home.html";
+
+            } else {
+
+                alert("Usuário ou senha incorretos.");
+
+            }
+
+        }
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+                login();
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
