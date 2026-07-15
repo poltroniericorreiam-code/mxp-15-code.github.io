@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MXP$15</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- TOPO -->
+  <header class="topo">
+    <div class="logo">MXP$15</div>
+    <div class="saldo">R$ 00,00</div>
+  </header>
+
+  <!-- BOTÕES DE AÇÃO -->
+  <section class="acoes">
+    <button onclick="window.location.href='deposito.html'">Depósito</button>
+    <button onclick="window.location.href='saque.html'">Saque</button>
+  </section>
+  
+  <!-- BANNER -->
+  <section class="banner-container">
+    <img src="images.jpeg" class="banner-img" alt="Banner MXP15">
+    <div class="banner-overlay">
+      <div style="text-align: center; line-height: 1.2; margin-bottom: 10px;">
+        <span style="font-size: 18px;">Bem-vindo ao</span><br>
+        <span style="font-size: 24px; font-weight: bold;">MXP$15</span>
+      </div>
+      <button onclick="window.location.href='promocao.html'">VER PROMOÇÕES</button>
+    </div>
+  </section>
+
+  <!-- CATEGORIAS -->
+  <section class="categorias">
+    <button class="active">🔥 Popular</button>
+    <button>🐯 PG</button>
+    <button>🎰 Pragmatic</button>
+    <button>🎲 Evolution</button>
+  </section>
+
+  <!-- SEÇÃO DE JOGOS (DETERMINADA PELO SCRIPT) -->
+  <section class="games-section">
+    <h2 id="titulo-categoria">🔥 Jogos Populares</h2>
+    <div id="games-grid" class="games-grid">
+      <!-- O script.js preencherá aqui automaticamente -->
+    </div>
+  </section>
+
+  <!-- MENU INFERIOR -->
+  <nav class="menu-bottom">
+    <a href="home.html" class="active">🏠 <span>Início</span></a>
+    <a href="promocao.html">🎁 <span>Promoção</span></a>
+    <a href="convite.html">👥 <span>Convidar</span></a>
+    <a href="perfil.html">👤 <span>Perfil</span></a>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
