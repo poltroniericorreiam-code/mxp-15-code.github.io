@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - MXP$15</title>
+
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <img src="4085.jpg" width="150" alt="Logo">
+
+        <h1>CRIAR CONTA</h1>
+
+        <br>
+
+        <form id="formCadastro">
+
+            <input type="text" id="usuario" placeholder="Usuário" required>
+
+            <br><br>
+
+            <input type="email" id="email" placeholder="E-mail" required>
+
+            <br><br>
+
+            <input type="password" id="senha" placeholder="Senha" minlength="6" required>
+
+            <br><br>
+
+            <button type="submit">
+                CADASTRAR
+            </button>
+
+        </form>
+
+        <br><br>
+
+        <button type="button" onclick="window.location.href='login.html'">
+            VOLTAR LOGIN
+        </button>
+
+    </div>
+
+    <!-- Biblioteca do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Seu arquivo supabase.js (agora está na mesma pasta) -->
+    <script src="supabase.js"></script>
+
+    <script>
+    document.getElementById("formCadastro").addEventListener("submit", async function(e){
+
+        e.preventDefault();
+
+        const usuario = document.getElementById("usuario").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const senha = document.getElementById("senha").value;
+
+        if(usuario === "" || email === "" || senha === ""){
+            alert("Preencha todos os campos!");
+            return;
+        }
+
+        try {
+
+            const { data, error } = await supabase.auth.signUp({
+
+                email: email,
+                password: senha
+
+            });
+
+            if(error){
+                alert(error.message);
+                return;
+            }
+
+            if(data.user){
+
+                const { error: erroUsuario } = await supabase
+                .from("usuarios")
+                .insert({
+
+                    id: data.user.id,
+                    usuario: usuario,
+                    email: email
+
+                });
+
+                if(erroUsuario){
+                    alert("Conta criada, mas ocorreu um erro ao salvar os dados.");
+                    console.log(erroUsuario);
+                    return;
+                }
+
+                alert("Cadastro realizado com sucesso!");
+
+                window.location.href = "login.html";
+            }
+
+        } catch(err){
+
+            alert("Erro: " + err.message);
+            console.log(err);
+
+        }
+
+    });
+    </script>
+
+</body>
+
+</html>
