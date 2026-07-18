@@ -49,6 +49,13 @@
 
     <!-- Biblioteca do Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+if (typeof supabase === "undefined") {
+    alert("ERRO: supabase.js não foi carregado.");
+} else {
+    alert("Supabase carregado com sucesso!");
+}
+    </script>
 
     <!-- Seu arquivo supabase.js (agora está na mesma pasta) -->
     <script src="supabase.js"></script>
