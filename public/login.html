@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MXP$15</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <div class="login-box">
+        <img src="4085.jpg" alt="Logo MXP$15" width="150">
+        <h1>LOGIN MXP$15</h1>
+
+        <input type="email" id="email" placeholder="E-mail" autocomplete="email" required>
+        <br><br>
+        <input type="password" id="senha" placeholder="Senha" autocomplete="current-password" required>
+        <br><br>
+
+        <button id="btnLogin">ENTRAR</button>
+        <br><br>
+        <button type="button" onclick="window.location.href='cadastro.html'">CRIAR CONTA</button>
+    </div>
+
+    <!-- Biblioteca do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Seu arquivo de inicialização -->
+    <script src="supabase.js"></script>
+
+    <script>
+    document.getElementById("btnLogin").addEventListener("click", async () => {
+        const email = document.getElementById("email").value.trim();
+        const senha = document.getElementById("senha").value;
+
+        if (!email || !senha) {
+            alert("Preencha todos os campos.");
+            return;
+        }
+
+        try {
+            // Utilizando 'supabase' conforme configurado no seu supabase.js
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: senha
+            });
+
+            if (error) {
+                alert("Erro no login: " + error.message);
+                return;
+            }
+
+            alert("Login realizado com sucesso!");
+            window.location.href = "home.html";
+
+        } catch (err) {
+            alert("Erro inesperado: " + err.message);
+        }
+    });
+    </script>
+
+</body>
+</html>
