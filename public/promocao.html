@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promoções 8143</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0a1424;
+    color:#fff;
+}
+
+.top-nav{
+    display:flex;
+    background:#0d1b33;
+    padding:12px;
+    overflow-x:auto;
+    border-bottom:2px solid #1a3a66;
+}
+
+.top-nav a{
+    color:#8899aa;
+    text-decoration:none;
+    padding:0 15px;
+    font-size:.9rem;
+    white-space:nowrap;
+}
+
+.top-nav a.active{
+    color:#fff;
+    border-bottom:2px solid #007bff;
+}
+
+.container{
+    padding:15px;
+    padding-bottom:90px;
+}
+
+.promo-card{
+    background:linear-gradient(135deg,#0044cc,#002266);
+    border:1px solid #3366ff;
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.promo-card:active{
+    transform:scale(.97);
+}
+
+.promo-text h2{
+    margin:0;
+    color:#ffcc00;
+    font-size:1.9rem;
+}
+
+.promo-text p{
+    margin:5px 0 0;
+    font-size:1rem;
+    font-weight:bold;
+    line-height:1.2;
+}
+
+.promo-img{
+    width:95px;
+    height:95px;
+    border-radius:12px;
+    overflow:hidden;
+    background:#001845;
+}
+
+.promo-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:#0d1b33;
+    display:flex;
+    justify-content:space-around;
+    padding:15px 0;
+    border-top:1px solid #1a3a66;
+    z-index: 999;
+}
+
+.bottom-nav a{
+    color:#fff;
+    text-decoration:none;
+    text-align:center;
+    font-size:.75rem;
+}
+
+.bottom-nav a:hover{
+    color:#ffcc00;
+}
+
+/* ESTILOS DO POP-UP DA FOTO DETALHADA */
+#modalPromocaoDetalhe {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 99999;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.modal-content-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    margin: auto;
+}
+.modal-content-wrapper img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    display: block;
+    border: 2px solid #ffcc00;
+}
+.btn-fechar-modal {
+    position: absolute;
+    top: -12px;
+    right: -5px;
+    background: #ff4d4d;
+    color: #fff;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    z-index: 100000;
+}
+.btn-acao-modal {
+    width: 100%;
+    margin-top: 15px;
+    background: #ffcc00;
+    color: #000;
+    border: none;
+    padding: 13px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(255,204,0,0.4);
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-nav">
+    <a href="#" class="active">Eventos</a>
+    <a href="rebate.html">Rebate</a>
+    <a href="vip.html">VIP</a>
+    <a href="cadastro.html">Código de Resgate</a>
+    <a href="#">Histórico</a>
+    <a href="pendente.html">Pendente</a>
+</div>
+
+<div class="container">
+
+<!-- CARD 2777: AGORA ABRE A FOTO DETALHADA EM POP-UP -->
+<div class="promo-card" onclick="abrirModalPromocao()">
+    <div class="promo-text">
+        <h2>R$ 2777</h2>
+        <p>RECOMPENSA DE<br>RECARGA</p>
+    </div>
+    <div class="promo-img">
+        <img src="c9ca71e2-f671-4557-aabd-f519175b2f36.png">
+    </div>
+</div>
+
+<div class="promo-card" onclick="location.href='convite.html'">
+    <div class="promo-text">
+        <h2>R$ 30 BÔNUS</h2>
+        <p>CONVIDE UM AMIGO<br>FÁCIL E LUCRATIVO</p>
+    </div>
+    <div class="promo-img">
+        <img src="f8f665aa-8f06-4139-add4-6c8c75fe06c8.png">
+    </div>
+</div>
+
+<div class="promo-card" onclick="location.href='vip.html'">
+    <div class="promo-text">
+        <h2>VIP BÔNUS</h2>
+        <p>TODOS OS MESES<br>TODAS AS SEMANAS<br>E TODOS OS DIAS</p>
+    </div>
+    <div class="promo-img">
+        <img src="e4a23320-cc87-4b46-b800-ab5faed9362e.png">
+    </div>
+</div>
+
+<div class="promo-card" onclick="location.href='rebate.html'">
+    <div class="promo-text">
+        <h2>R$ 555.555</h2>
+        <p>DIA 5 DE CADA MÊS<br>AGRADECE AOS USUÁRIOS</p>
+    </div>
+    <div class="promo-img">
+        <img src="e52286c8-05d1-4b14-a02b-868c339bc234.png">
+    </div>
+</div>
+
+<div class="promo-card" onclick="location.href='cadastro.html'">
+    <div class="promo-text">
+        <h2>BÔNUS MISTERIOSO</h2>
+        <p>PARA NOVOS MEMBROS<br>ATÉ R$ 8.888</p>
+    </div>
+    <div class="promo-img">
+        <img src="images (1).jpeg">
+    </div>
+</div>
+
+</div>
+
+<!-- MENU INFERIOR -->
+<div class="bottom-nav">
+    <a href="home.html">🏠<br>Início</a>
+    <a href="promocao.html">🎁<br>Promoção</a>
+    <a href="deposito.html">💰<br>Depósito</a>
+    <a href="saque.html">💸<br>Saque</a>
+    <a href="perfil.html">👤<br>Perfil</a>
+</div>
+
+<!-- POP-UP DA FOTO DETALHADA -->
+<div id="modalPromocaoDetalhe">
+    <div class="modal-content-wrapper">
+        <button class="btn-fechar-modal" onclick="fecharModalPromocao()">&times;</button>
+        <img src="d9f174c5-d5a8-475e-bb77-3f91a5852be7.png" alt="Detalhes da Promoção">
+        <button class="btn-acao-modal" onclick="location.href='deposito.html'">Fazer Depósito para Participar</button>
+    </div>
+</div>
+
+<script>
+function abrirModalPromocao() {
+    const modal = document.getElementById('modalPromocaoDetalhe');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+function fecharModalPromocao() {
+    const modal = document.getElementById('modalPromocaoDetalhe');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+</script>
+
+</body>
+</html>
