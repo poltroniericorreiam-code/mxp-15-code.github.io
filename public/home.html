@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MXP$15</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Estilos extras para barra deslizante e sistema de expansão */
+    .categorias {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px 15px;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .categorias::-webkit-scrollbar { display: none; }
+    .categorias button {
+      flex: 0 0 auto;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      background: #1e1e2f;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .categorias button.active {
+      background: #e6af2e;
+      color: #000;
+    }
+    .search-box {
+      padding: 0 15px;
+      margin: 10px 0;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 20px;
+      border: 1px solid #333;
+      background: #181824;
+      color: #fff;
+      font-size: 14px;
+    }
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 0 15px;
+    }
+    @media (min-width: 600px) {
+      .games-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .game-card {
+      background: #181824;
+      border-radius: 10px;
+      padding: 8px;
+      text-align: center;
+      display: none; /* Controlado via JS para o "Mostrar Mais" */
+    }
+    .game-card.visible {
+      display: block;
+    }
+    .game-card img {
+      width: 100%;
+      border-radius: 8px;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+    }
+    .game-card p {
+      font-size: 12px;
+      margin: 6px 0;
+      color: #fff;
+    }
+    .game-card button {
+      width: 100%;
+      padding: 6px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-mostrar-mais {
+      display: block;
+      width: 90%;
+      margin: 15px auto;
+      padding: 10px;
+      background: #22223b;
+      color: #e6af2e;
+      border: 1px solid #e6af2e;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPO -->
+  <header class="topo">
+    <div class="logo">MXP$15</div>
+    <div class="saldo">R$ 00,00</div>
+  </header>
+
+  <!-- BOTÕES DE AÇÃO -->
+  <section class="acoes">
+    <button onclick="window.location.href='deposito.html'">Depósito</button>
+    <button onclick="window.location.href='saque.html'">Saque</button>
+  </section>
+  
+  <!-- BANNER COM IMAGEM DE FUNDO -->
+  <section class="banner-container">
+    <img src="images.jpeg" class="banner-img" alt="Banner MXP15">
+    <div class="banner-overlay">
+      <div style="text-align: center; line-height: 1.2; margin-bottom: 10px;">
+        <span style="font-size: 18px;">Bem-vindo ao</span><br>
+        <span style="font-size: 24px; font-weight: bold;">MXP$15</span>
+      </div>
+      <button onclick="window.location.href='promocao.html'">VER PROMOÇÕES</button>
+    </div>
+  </section>
+
+  <!-- BARRA DE PESQUISA -->
+  <div class="search-box">
+    <input type="text" id="inputBusca" placeholder="Pesquisar jogo..." onkeyup="pesquisarJogos()">
+  </div>
+
+  <!-- CATEGORIAS (BARRA DE PROVEDORES DESLIZANTE) -->
+  <section class="categorias" id="barraCategorias">
+    <button class="active" onclick="filtrarCategoria('popular', this)">🔥 Popular</button>
+    <button onclick="filtrarCategoria('pg', this)">🐯 PG</button>
+    <button onclick="filtrarCategoria('pp', this)">👑 PP</button>
+    <button onclick="filtrarCategoria('g759', this)">🎮 G759</button>
+    <button onclick="filtrarCategoria('tada', this)">⚡ Tada</button>
+  </section>
+
+  <!-- SEÇÃO DE JOGOS -->
+  <section class="games-section" style="margin-bottom: 70px;">
+    <h2 id="tituloCategoria" style="padding-left: 15px; font-size: 16px; color: #fff;">🔥 Jogos Populares</h2>
+
+    <div class="games-grid" id="gridJogos">
+      <!-- POPULARES / VARIADOS -->
+      <div class="game-card visible" data-cat="popular" data-nome="fortune tiger">
+        <img src="tiger.jpg" alt="Fortune Tiger"><p>🐯 Fortune Tiger</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+      <div class="game-card visible" data-cat="popular" data-nome="fortune rabbit">
+        <img src="rabbit.jpg" alt="Fortune Rabbit"><p>🐰 Fortune Rabbit</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+      <div class="game-card visible" data-cat="popular" data-nome="fortune dragon">
+        <img src="dragon.jpg" alt="Fortune Dragon"><p>🐲 Fortune Dragon</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+      <div class="game-card visible" data-cat="popular" data-nome="fortune ox">
+        <img src="ox.jpg" alt="Fortune Ox"><p>🐂 Fortune Ox</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+
+      <!-- PG SOFT (Mais jogos) -->
+      <div class="game-card" data-cat="pg" data-nome="lucky neko">
+        <img src="tiger.jpg" alt="Lucky Neko"><p>🐱 Lucky Neko</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+      <div class="game-card" data-cat="pg" data-nome="ways of qilin">
+        <img src="rabbit.jpg" alt="Ways of Qilin"><p>🐉 Ways of Qilin</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+      <div class="game-card" data-cat="pg" data-nome="mahjong ways">
+        <img src="dragon.jpg" alt="Mahjong Ways"><p>🀄 Mahjong Ways</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+      <div class="game-card" data-cat="pg" data-nome="ganesha gold">
+        <img src="ox.jpg" alt="Ganesha Gold"><p>🐘 Ganesha Gold</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+
+      <!-- PRAGMATIC PLAY (PP) -->
+      <div class="game-card" data-cat="pp" data-nome="gates of olympus">
+        <img src="tiger.jpg" alt="Gates of Olympus"><p>⚡ Gates of Olympus</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+      <div class="game-card" data-cat="pp" data-nome="sweet bonanza">
+        <img src="rabbit.jpg" alt="Sweet Bonanza"><p>🍬 Sweet Bonanza</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+      <div class="game-card" data-cat="pp" data-nome="sugar rush">
+        <img src="dragon.jpg" alt="Sugar Rush"><p>🍭 Sugar Rush</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+
+      <!-- G759 -->
+      <div class="game-card" data-cat="g759" data-nome="g759 slot 1">
+        <img src="ox.jpg" alt="G759 Game"><p>🚀 Aviator G759</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+      <div class="game-card" data-cat="g759" data-nome="g759 slot 2">
+        <img src="tiger.jpg" alt="G759 Game 2"><p>💎 Diamantes G759</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+
+      <!-- TADA -->
+      <div class="game-card" data-cat="tada" data-nome="money coming">
+        <img src="rabbit.jpg" alt="Money Coming"><p>💵 Money Coming</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+      <div class="game-card" data-cat="tada" data-nome="fortune gems">
+        <img src="dragon.jpg" alt="Fortune Gems"><p>💎 Fortune Gems</p><button onclick="window.location.href='jogo.html'">Jogar</button>
+      </div>
+    </div>
+
+    <!-- BOTÃO MOSTRAR MAIS / MENOS -->
+    <button class="btn-mostrar-mais" id="btnExpandir" onclick="alternarExpandir()">Mostrar Tudo ▼</button>
+  </section>
+
+  <!-- MENU INFERIOR -->
+  <nav class="menu-bottom">
+    <a href="home.html" class="active">🏠 <span>Início</span></a>
+    <a href="promocao.html">🎁 <span>Promoção</span></a>
+    <a href="convite.html">👥 <span>Convidar</span></a>
+    <a href="perfil.html">👤 <span>Perfil</span></a>
+  </nav>
+
+  <script>
+    let categoriaAtual = 'popular';
+    let expandido = false;
+
+    function filtrarCategoria(cat, elemento) {
+      categoriaAtual = cat;
+      expandido = false;
+      document.getElementById('btnExpandir').innerText = "Mostrar Tudo ▼";
+      
+      // Atualiza botão ativo na barra
+      document.querySelectorAll('.categorias button').forEach(b => b.classList.remove('active'));
+      elemento.classList.add('active');
+
+      atualizarExibicaoJogos();
+    }
+
+    function atualizarExibicaoJogos() {
+      const cards = document.querySelectorAll('.game-card');
+      let visiveisContador = 0;
+
+      cards.forEach(card => {
+        const catCard = card.getAttribute('data-cat');
+        if (catCard === categoriaAtual) {
+          if (expandido || visiveisContador < 4) {
+            card.classList.add('visible');
+            visiveisContador++;
+          } else {
+            card.classList.remove('visible');
+          }
+        } else {
+          card.classList.remove('visible');
+        }
+      });
+
+      // Esconde ou mostra o botão de expandir dependendo se tem mais de 4 jogos na categoria
+      const totalDaCategoria = Array.from(cards).filter(c => c.getAttribute('data-cat') === categoriaAtual).length;
+      const btn = document.getElementById('btnExpandir');
+      if (totalDaCategoria > 4) {
+        btn.style.display = 'block';
+      } else {
+        btn.style.display = 'none';
+      }
+    }
+
+    function alternarExpandir() {
+      expandido = !expandido;
+      const btn = document.getElementById('btnExpandir');
+      if (expandido) {
+        btn.innerText = "Recolher ▲";
+      } else {
+        btn.innerText = "Mostrar Tudo ▼";
+      }
+      atualizarExibicaoJogos();
+    }
+
+    function pesquisarJogos() {
+      const termo = document.getElementById('inputBusca').value.toLowerCase();
+      const cards = document.querySelectorAll('.game-card');
+      
+      if (termo === "") {
+        atualizarExibicaoJogos();
+        return;
+      }
+
+      cards.forEach(card => {
+        const nomeJogo = card.getAttribute('data-nome');
+        if (nomeJogo.includes(termo)) {
+          card.classList.add('visible');
+        } else {
+          card.classList.remove('visible');
+        }
+      });
+      document.getElementById('btnExpandir').style.display = 'none';
+    }
+
+    // Inicializa a tela mostrando apenas os 4 primeiros da categoria popular
+    atualizarExibicaoJogos();
+  </script>
+</body>
+  </html>
+  
