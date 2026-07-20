@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MXP$15 - Pagamento Pix</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Biblioteca para gerar o QR Code automaticamente -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        body {
+            background-color: #0a1424; /* Azul escuro padrão da MXP$15 */
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 15px;
+            padding-bottom: 40px;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0 20px 0;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-bottom: 1px solid #1a3a66;
+            margin-bottom: 15px;
+        }
+        .header i {
+            cursor: pointer;
+            color: #8899aa;
+        }
+
+        /* INSTRUÇÕES DO TOPO */
+        .instructions {
+            font-size: 0.82em;
+            color: #8899aa;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            background: #0d1b33;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #1a3a66;
+        }
+        .instructions p {
+            margin: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .instructions i {
+            color: #ffcc00; /* Detalhe em amarelo nas bolinhas */
+            font-size: 0.6em;
+            margin-top: 5px;
+        }
+
+        /* VALOR EM DESTAQUE */
+        .valor-container {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .valor-container span {
+            color: #ffcc00;
+        }
+        .valor-container i {
+            font-size: 0.7em;
+            color: #8899aa;
+            cursor: pointer;
+            margin-left: 6px;
+        }
+        .valor-container i:hover {
+            color: #ffcc00;
+        }
+
+        /* QR CODE BOX */
+        .qrcode-wrapper {
+            text-align: center;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 0 auto 20px auto;
+            width: 190px;
+            height: 190px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 2px solid #1a3a66;
+        }
+        .center-qrcode {
+            text-align: center;
+        }
+        #qrcode img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* BOTÃO AMARELO GRANDE */
+        .btn-copiar-qr {
+            width: 100%;
+            background: #ffcc00;
+            color: #000000;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.05em;
+            cursor: pointer;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+            transition: 0.2s;
+        }
+        .btn-copiar-qr:active {
+            transform: scale(0.98);
+        }
+
+        /* DETALHES DO PEDIDO */
+        .details-section {
+            font-size: 0.85em;
+            color: #8899aa;
+            background: #0d1b33;
+            border: 1px solid #1a3a66;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+        .detail-value {
+            color: #ffffff;
+            font-weight: 500;
+        }
+        .status-pendente {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+        .copy-icon {
+            cursor: pointer;
+            color: #8899aa;
+            margin-left: 6px;
+        }
+        .copy-icon:hover {
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <div class="header">
+        <i class="fa-solid fa-chevron-left" onclick="history.back()"></i>
+        <span>Depósito</span>
+        <i class="fa-regular fa-file-lines" style="visibility: hidden;"></i>
+    </div>
+
+    <!-- INSTRUÇÕES -->
+    <div class="instructions">
+        <p><i class="fa-solid fa-circle"></i> Abra seu aplicativo de pagamento e digitalize ou copie e cole o código QR abaixo para concluir sua compra</p>
+        <p><i class="fa-solid fa-circle"></i> Este código QR só pode ser pago uma vez. Se precisar pagar novamente, volte e recarregue</p>
+        <p><i class="fa-solid fa-circle"></i> Após o pagamento ser bem-sucedido, você pode retornar ao lobby do jogo e aguardar a adição de pontos!</p>
+    </div>
+
+    <!-- VALOR -->
+    <div class="valor-container">
+        <span id="display-valor">R$ 0,00</span>
+        <i class="fa-regular fa-copy" onclick="copiarTexto(document.getElementById('display-valor').innerText, 'Valor copiado!')" title="Copiar Valor"></i>
+    </div>
+
+    <!-- QR CODE -->
+    <div class="center-qrcode">
+        <div class="qrcode-wrapper">
+            <div id="qrcode"></div>
+        </div>
+    </div>
+
+    <!-- BOTÃO COPIAR CÓDIGO QR -->
+    <button class="btn-copiar-qr" onclick="copiarPixPayload()">Copiar código QR</button>
+
+    <!-- DETALHES INFERIORES -->
+    <div class="details-section">
+        <div class="detail-row">
+            <span>Endereço do código QR</span>
+            <span>
+                <span id="end-qr" style="color: #8899aa;">QR***6304265E</span>
+                <i class="fa-regular fa-copy copy-icon" onclick="copiarTexto('00020126580014br.gov.bcb.pix0136suachavepixaqui520400005303986', 'Endereço Pix copiado!')"></i>
+            </span>
+        </div>
+        <div class="detail-row">
+            <span>Tempo efetivo</span>
+            <span class="detail-value" id="timer">23h 59m 55s</span>
+        </div>
+        <div class="detail-row">
+            <span>Status do pedido</span>
+            <span class="status-pendente">Pendente</span>
+        </div>
+        <div class="detail-row">
+            <span>Hora de Criação</span>
+            <span class="detail-value" id="hora-criacao">--:--:--</span>
+        </div>
+        <div class="detail-row">
+            <span>Número do Pedido</span>
+            <span>
+                <span class="detail-value" id="num-pedido">THRP178459...</span>
+                <i class="fa-regular fa-copy copy-icon" onclick="copiarNumeroPedido()"></i>
+            </span>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        let valorRecebido = urlParams.get('valor') || '10.00';
+
+        let valorFormatado = parseFloat(valorRecebido).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        document.getElementById('display-valor').innerText = valorFormatado;
+
+        let payloadPixFake = `00020126580014br.gov.bcb.pix0136suachavepixaqui5204000053039865802BR5925MXP15_CASINO6009SAO PAULO62070503***6304`;
+        
+        new QRCode(document.getElementById("qrcode"), {
+            text: `PIX:VALOR=${valorRecebido}:${payloadPixFake}`,
+            width: 160,
+            height: 160,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+
+        const agora = new Date();
+        const dataFormatada = agora.getFullYear() + '-' + 
+            String(agora.getMonth() + 1).padStart(2, '0') + '-' + 
+            String(agora.getDate()).padStart(2, '0') + ' ' + 
+            String(agora.getHours()).padStart(2, '0') + ':' + 
+            String(agora.getMinutes()).padStart(2, '0') + ':' + 
+            String(agora.getSeconds()).padStart(2, '0');
+        document.getElementById('hora-criacao').innerText = dataFormatada;
+
+        const numeroPedidoGerado = "THRP" + Math.floor(Math.random() * 9000000000000000000 + 1000000000000000000);
+        document.getElementById('num-pedido').innerText = numeroPedidoGerado.substring(0, 12) + "...";
+
+        function copiarTexto(texto, mensagemSucesso) {
+            navigator.clipboard.writeText(texto).then(() => {
+                alert(mensagemSucesso);
+            });
+        }
+
+        function copiarPixPayload() {
+            copiarTexto(payloadPixFake + `&valor=${valorRecebido}`, "Código QR (Pix Copia e Cola) copiado com sucesso!");
+        }
+
+        function copiarNumeroPedido() {
+            copiarTexto(numeroPedidoGerado, "Número do pedido copiado!");
+        }
+
+        let tempoSegundos = 24 * 3600 - 5;
+        setInterval(() => {
+            let h = Math.floor(tempoSegundos / 3600);
+            let m = Math.floor((tempoSegundos % 3600) / 60);
+            let s = tempoSegundos % 60;
+            document.getElementById('timer').innerText = `${h}h ${String(m).padStart(2, '0')}m ${String(s).padStart(2, '0')}s`;
+            if(tempoSegundos > 0) tempoSegundos--;
+        }, 1000);
+    </script>
+</body>
+  </html>
+  
