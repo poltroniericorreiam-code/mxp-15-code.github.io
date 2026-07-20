@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MXP$15 - Código de Resgate</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0a1424;
+    color:#fff;
+}
+
+/* MENU SUPERIOR DE ABAS */
+.top-nav{
+    display:flex;
+    background:#0d1b33;
+    padding:12px;
+    overflow-x:auto;
+    border-bottom:2px solid #1a3a66;
+    scrollbar-width:none;
+}
+.top-nav::-webkit-scrollbar { display: none; }
+
+.top-nav a{
+    color:#8899aa;
+    text-decoration:none;
+    padding:0 15px;
+    font-size:.9rem;
+    white-space:nowrap;
+}
+
+.top-nav a.active{
+    color:#fff;
+    border-bottom:2px solid #ffcc00;
+}
+
+.container{
+    padding:20px 15px;
+    padding-bottom:100px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* BANNER DE RESGATE (Adicione a foto que quiser com o nome banner-resgate.png) */
+.banner-resgate {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid #1a3a66;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    background: #0d1b33;
+    text-align: center;
+}
+.banner-resgate img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* FORMULÁRIO DE RESGATE */
+.resgate-box {
+    margin-bottom: 25px;
+}
+
+.resgate-box label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.resgate-input {
+    width: 100%;
+    padding: 14px 15px;
+    background: #0d1b33;
+    border: 1px solid #1a3a66;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1rem;
+    box-sizing: border-box;
+    outline: none;
+    margin-bottom: 15px;
+}
+.resgate-input::placeholder {
+    color: #667788;
+}
+
+.btn-resgatar {
+    width: 100%;
+    background: #ffcc00;
+    color: #000;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(255,204,0,0.3);
+    transition: 0.2s;
+}
+.btn-resgatar:active {
+    transform: scale(0.98);
+}
+
+/* REDES SOCIAIS */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0 30px 0;
+}
+
+.social-btn {
+    width: 42px;
+    height: 42px;
+    background: #132238;
+    border: 1px solid #1f3a5f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: 0.2s;
+}
+.social-btn:hover {
+    background: #ffcc00;
+    color: #000;
+}
+
+/* REGRAS */
+.regras-lista {
+    font-size: 0.8rem;
+    color: #8899aa;
+    line-height: 1.6;
+    padding-left: 0;
+    list-style: none;
+    margin: 0;
+}
+.regras-lista li {
+    margin-bottom: 12px;
+}
+
+/* MENU INFERIOR FIXO */
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#0d1b33;
+    display:flex;
+    justify-content:space-around;
+    padding:12px 0;
+    border-top:1px solid #1a3a66;
+    z-index: 999;
+    box-sizing: border-box;
+}
+
+.bottom-nav a{
+    color:#fff;
+    text-decoration:none;
+    text-align:center;
+    font-size:.75rem;
+}
+
+.bottom-nav a:hover{
+    color:#ffcc00;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU SUPERIOR DE ABAS -->
+<div class="top-nav">
+    <a href="promocao.html">Eventos</a>
+    <a href="rebate.html">Rebate</a>
+    <a href="vip.html">VIP</a>
+    <a href="resgate.html" class="active">Código de Resgate</a>
+    <a href="historico.html">Histórico</a>
+</div>
+
+<div class="container">
+
+    <!-- BANNER DE RESGATE (Para trocar a foto, basta salvar a sua imagem com o nome 'banner-resgate.png' na pasta) -->
+    <div class="banner-resgate">
+        <img src="banner-resgate.png" alt="Banner Código de Resgate" onerror="this.style.display='none'">
+    </div>
+
+    <!-- CAIXA DE INPUT DO CÓDIGO -->
+    <div class="resgate-box">
+        <label>Por favor, insira o código de resgate</label>
+        <input type="text" id="inputCodigo" class="resgate-input" placeholder="Por favor, insira o código de resgate">
+        <button class="btn-resgatar" onclick="resgatarCodigo()">Resgatar Bônus</button>
+    </div>
+
+    <!-- REDES SOCIAIS -->
+    <div class="social-icons">
+        <a href="#" class="social-btn" title="Facebook">f</a>
+        <a href="#" class="social-btn" title="Telegram">✈</a>
+        <a href="#" class="social-btn" title="Instagram">📷</a>
+        <a href="#" class="social-btn" title="WhatsApp">📞</a>
+        <a href="#" class="social-btn" title="X">𝕏</a>
+    </div>
+
+    <!-- REGRAS -->
+    <ul class="regras-lista">
+        <li>1. O código de resgate é uma atividade de troca de moeda promovida pela plataforma.</li>
+        <li>2. Siga o canal oficial do Telegram, WhatsApp, Instagram, Facebook e Twitter da <strong>MXP$15</strong> para receber os códigos de resgate.</li>
+        <li>3. Os códigos de resgate serão divulgados em horários não fixos todos os dias. Outras atividades também serão regularmente lançadas em outros horários.</li>
+        <li>4. Torne-se um agente da <strong>MXP$15</strong> e receba códigos de resgate exclusivos.</li>
+    </ul>
+
+</div>
+
+<!-- MENU INFERIOR FIXO -->
+<div class="bottom-nav">
+    <a href="home.html">🏠<br>Início</a>
+    <a href="promocao.html">🎁<br>Promoção</a>
+    <a href="deposito.html">💰<br>Depósito</a>
+    <a href="saque.html">💸<br>Saque</a>
+    <a href="perfil.html">👤<br>Perfil</a>
+</div>
+
+<script>
+function resgatarCodigo() {
+    const codigo = document.getElementById('inputCodigo').value.trim();
+    if(codigo === "") {
+        alert("Por favor, digite o código de resgate!");
+    } else {
+        alert("Código inválido ou expirado.");
+    }
+}
+</script>
+
+</body>
+</html>
