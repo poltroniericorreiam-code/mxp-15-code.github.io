@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MXP$15</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Evita que o celular selecione texto por engano ao clicar nos botões */
+    button, .categorias button, .btn-mostrar-mais, .game-card {
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    /* Estilos extras para barra deslizante e sistema de expansão */
+    .categorias {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px 15px;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .categorias::-webkit-scrollbar { display: none; }
+    .categorias button {
+      flex: 0 0 auto;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      background: #1e1e2f;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .categorias button.active {
+      background: #e6af2e;
+      color: #000;
+    }
+
+    /* BARRA DE PESQUISA COM LUPA */
+    .search-box {
+      padding: 0 15px;
+      margin: 10px 0;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 10px 15px 10px 40px; /* Espaço para a lupa */
+      border-radius: 20px;
+      border: 1px solid #333;
+      background: #181824;
+      color: #fff;
+      font-size: 14px;
+    }
+    .search-icon {
+      position: absolute;
+      left: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    /* Grade fixada em 4 colunas (formato 4x4) com capas preenchendo tudo */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 0 10px;
+    }
+    .game-card {
+      background: transparent;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      display: none;
+      position: relative;
+      cursor: pointer;
+    }
+    .game-card.visible {
+      display: block;
+    }
+    .game-card img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s;
+    }
+    .game-card:hover img {
+      transform: scale(1.03);
+    }
+    .btn-mostrar-mais {
+      display: block;
+      width: 90%;
+      margin: 15px auto;
+      padding: 10px;
+      background: #22223b;
+      color: #e6af2e;
+      border: 1px solid #e6af2e;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+    }
+    .secao-provedor {
+      margin-top: 25px;
+      border-top: 1px solid #22223b;
+      padding-top: 15px;
+    }
+
+    /* ESTILO DA BARRA DE GANHOS AO VIVO COM ANIMAÇÃO SUAVE */
+    .live-winner-bar {
+      background: linear-gradient(90deg, #181824, #2a2a40, #181824);
+      border-top: 1px solid #e6af2e33;
+      border-bottom: 1px solid #e6af2e33;
+      color: #fff;
+      padding: 8px 15px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      margin-bottom: 10px;
+    }
+    .live-winner-bar .badge {
+      background: #e6af2e;
+      color: #000;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .live-winner-container {
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .live-winner-text {
+      display: inline-block;
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPO -->
+  <header class="topo">
+    <div class="logo">MXP$15</div>
+    <div class="saldo">R$ 00,00</div>
+  </header>
+
+  <!-- BOTÕES DE AÇÃO -->
+  <section class="acoes">
+    <button onclick="window.location.href='deposito.html'">Depósito</button>
+    <button onclick="window.location.href='saque.html'">Saque</button>
+  </section>
+  
+  <!-- BARRA DE GANHOS AO VIVO -->
+  <div class="live-winner-bar">
+    <span class="badge">AO VIVO</span>
+    <div class="live-winner-container">
+      <span id="liveWinnerTicker" class="live-winner-text">Carregando premiados...</span>
+    </div>
+  </div>
+
+  <!-- BANNER COM IMAGEM DE FUNDO -->
+  <section class="banner-container">
+    <img src="images.jpeg" class="banner-img" alt="Banner MXP15">
+    <div class="banner-overlay">
+      <div style="text-align: center; line-height: 1.2; margin-bottom: 10px;">
+        <span style="font-size: 18px;">Bem-vindo ao</span><br>
+        <span style="font-size: 24px; font-weight: bold;">MXP$15</span>
+      </div>
+      <button onclick="window.location.href='promocao.html'">VER PROMOÇÕES</button>
+    </div>
+  </section>
+
+  <!-- BARRA DE PESQUISA COM LUPA -->
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="inputBusca" placeholder="Pesquisar jogo..." onkeyup="pesquisarJogos()">
+  </div>
+
+  <!-- CATEGORIAS (BARRA DE PROVEDORES DESLIZANTE) -->
+  <section class="categorias" id="barraCategorias">
+    <button class="active" onclick="filtrarCategoria('popular', this)">🔥 Popular</button>
+    <button onclick="filtrarCategoria('pg', this)">🐯 PG</button>
+    <button onclick="filtrarCategoria('pp', this)">👑 PP</button>
+    <button onclick="filtrarCategoria('g759', this)">🎮 G759</button>
+    <button onclick="filtrarCategoria('tada', this)">⚡ Tada</button>
+  </section>
+
+  <!-- SEÇÃO DE JOGOS PRINCIPAL (FILTRADA POR CATEGORIA) -->
+  <section class="games-section" style="margin-bottom: 30px;">
+    <h2 id="tituloCategoria" style="padding-left: 15px; font-size: 16px; color: #fff; margin-bottom: 10px;">🔥 Jogos Populares</h2>
+
+    <div class="games-grid" id="gridJogos">
+      <!-- POPULARES / VARIADOS (8 itens iniciais para formar o 4x4) -->
+      <div class="game-card visible" data-cat="popular" data-nome="fortune tiger" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Fortune Tiger"></div>
+      <div class="game-card visible" data-cat="popular" data-nome="fortune rabbit" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Fortune Rabbit"></div>
+      <div class="game-card visible" data-cat="popular" data-nome="fortune dragon" onclick="window.location.href='jogo.html'"><img src="dragon.jpg" alt="Fortune Dragon"></div>
+      <div class="game-card visible" data-cat="popular" data-nome="fortune ox" onclick="window.location.href='jogo.html'"><img src="ox.jpg" alt="Fortune Ox"></div>
+      <div class="game-card visible" data-cat="popular" data-nome="lucky neko" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Lucky Neko"></div>
+      <div class="game-card visible" data-cat="popular" data-nome="gates of olympus" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Gates of Olympus"></div>
+      <div class="game-card visible" data-cat="popular" data-nome="money coming" onclick="window.location.href='jogo.html'"><img src="dragon.jpg" alt="Money Coming"></div>
+      <div class="game-card visible" data-cat="popular" data-nome="sweet bonanza" onclick="window.location.href='jogo.html'"><img src="ox.jpg" alt="Sweet Bonanza"></div>
+      <!-- Itens extras da categoria popular -->
+      <div class="game-card" data-cat="popular" data-nome="mahjong ways" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Mahjong Ways"></div>
+      <div class="game-card" data-cat="popular" data-nome="sugar rush" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Sugar Rush"></div>
+
+      <!-- PG SOFT -->
+      <div class="game-card" data-cat="pg" data-nome="lucky neko" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Lucky Neko"></div>
+      <div class="game-card" data-cat="pg" data-nome="ways of qilin" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Ways of Qilin"></div>
+      <div class="game-card" data-cat="pg" data-nome="mahjong ways" onclick="window.location.href='jogo.html'"><img src="dragon.jpg" alt="Mahjong Ways"></div>
+      <div class="game-card" data-cat="pg" data-nome="ganesha gold" onclick="window.location.href='jogo.html'"><img src="ox.jpg" alt="Ganesha Gold"></div>
+      <div class="game-card" data-cat="pg" data-nome="wild bandito" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Wild Bandito"></div>
+      <div class="game-card" data-cat="pg" data-nome="treasure chest" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Treasure Chest"></div>
+      <div class="game-card" data-cat="pg" data-nome="fortune tiger" onclick="window.location.href='jogo.html'"><img src="dragon.jpg" alt="Fortune Tiger"></div>
+      <div class="game-card" data-cat="pg" data-nome="fortune rabbit" onclick="window.location.href='jogo.html'"><img src="ox.jpg" alt="Fortune Rabbit"></div>
+
+      <!-- PRAGMATIC PLAY (PP) -->
+      <div class="game-card" data-cat="pp" data-nome="gates of olympus" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Gates of Olympus"></div>
+      <div class="game-card" data-cat="pp" data-nome="sweet bonanza" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Sweet Bonanza"></div>
+      <div class="game-card" data-cat="pp" data-nome="sugar rush" onclick="window.location.href='jogo.html'"><img src="dragon.jpg" alt="Sugar Rush"></div>
+      <div class="game-card" data-cat="pp" data-nome="big bass bonanza" onclick="window.location.href='jogo.html'"><img src="ox.jpg" alt="Big Bass"></div>
+
+      <!-- G759 -->
+      <div class="game-card" data-cat="g759" data-nome="g759 slot 1" onclick="window.location.href='jogo.html'"><img src="ox.jpg" alt="G759 Game"></div>
+      <div class="game-card" data-cat="g759" data-nome="g759 slot 2" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="G759 Game 2"></div>
+
+      <!-- TADA -->
+      <div class="game-card" data-cat="tada" data-nome="money coming" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Money Coming"></div>
+      <div class="game-card" data-cat="tada" data-nome="fortune gems" onclick="window.location.href='jogo.html'"><img src="dragon.jpg" alt="Fortune Gems"></div>
+      <div class="game-card" data-cat="tada" data-nome="golden bank" onclick="window.location.href='jogo.html'"><img src="ox.jpg" alt="Golden Bank"></div>
+      <div class="game-card" data-cat="tada" data-nome="roma x" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Roma X"></div>
+    </div>
+
+    <!-- BOTÃO MOSTRAR MAIS / MENOS -->
+    <button class="btn-mostrar-mais" id="btnExpandir" onclick="alternarExpandir()">Mostrar Tudo ▼</button>
+  </section>
+
+  <!-- SEÇÃO FIXA ADICIONAL: JOGOS PG SOFT -->
+  <section class="games-section secao-provedor" style="margin-bottom: 20px;">
+    <h2 style="padding-left: 15px; font-size: 16px; color: #fff; margin-bottom: 10px;">🐯 Jogos PG Soft</h2>
+    <div class="games-grid" id="gridPgSecao">
+      <div class="game-card pg-card visible" data-nome="fortune tiger" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Fortune Tiger"></div>
+      <div class="game-card pg-card visible" data-nome="fortune rabbit" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Fortune Rabbit"></div>
+      <div class="game-card pg-card visible" data-nome="fortune dragon" onclick="window.location.href='jogo.html'"><img src="dragon.jpg" alt="Fortune Dragon"></div>
+      <div class="game-card pg-card visible" data-nome="fortune ox" onclick="window.location.href='jogo.html'"><img src="ox.jpg" alt="Fortune Ox"></div>
+      <div class="game-card pg-card visible" data-nome="lucky neko" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Lucky Neko"></div>
+      <div class="game-card pg-card visible" data-nome="mahjong ways" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Mahjong Ways"></div>
+      <div class="game-card pg-card visible" data-nome="ways of qilin" onclick="window.location.href='jogo.html'"><img src="dragon.jpg" alt="Ways of Qilin"></div>
+      <div class="game-card pg-card visible" data-nome="ganesha gold" onclick="window.location.href='jogo.html'"><img src="ox.jpg" alt="Ganesha Gold"></div>
+      <!-- Itens extras PG -->
+      <div class="game-card pg-card" data-nome="wild bandito" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Wild Bandito"></div>
+      <div class="game-card pg-card" data-nome="treasure chest" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Treasure Chest"></div>
+    </div>
+    <button class="btn-mostrar-mais" id="btnExpandirPg" onclick="alternarExpandirSecao('pg')">Mostrar Tudo ▼</button>
+  </section>
+
+  <!-- SEÇÃO FIXA ADICIONAL: JOGOS TADA -->
+  <section class="games-section secao-provedor" style="margin-bottom: 30px;">
+    <h2 style="padding-left: 15px; font-size: 16px; color: #fff; margin-bottom: 10px;">⚡ Jogos Tada</h2>
+    <div class="games-grid" id="gridTadaSecao">
+      <div class="game-card tada-card visible" data-nome="money coming" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Money Coming"></div>
+      <div class="game-card tada-card visible" data-nome="fortune gems" onclick="window.location.href='jogo.html'"><img src="dragon.jpg" alt="Fortune Gems"></div>
+      <div class="game-card tada-card visible" data-nome="golden bank" onclick="window.location.href='jogo.html'"><img src="ox.jpg" alt="Golden Bank"></div>
+      <div class="game-card tada-card visible" data-nome="roma x" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Roma X"></div>
+      <div class="game-card tada-card visible" data-nome="roma x 2" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Roma X 2"></div>
+      <div class="game-card tada-card visible" data-nome="fortune gems 2" onclick="window.location.href='jogo.html'"><img src="dragon.jpg" alt="Fortune Gems 2"></div>
+      <div class="game-card tada-card visible" data-nome="crazy 777" onclick="window.location.href='jogo.html'"><img src="ox.jpg" alt="Crazy 777"></div>
+      <div class="game-card tada-card visible" data-nome="super ace" onclick="window.location.href='jogo.html'"><img src="tiger.jpg" alt="Super Ace"></div>
+      <!-- Itens extras Tada -->
+      <div class="game-card tada-card" data-nome="bone fortune" onclick="window.location.href='jogo.html'"><img src="rabbit.jpg" alt="Bone Fortune"></div>
+      <div class="game-card tada-card" data-nome="twin wins" onclick="window.location.href='jogo.html'"><img src="dragon.jpg" alt="Twin Wins"></div>
+    </div>
+    <button class="btn-mostrar-mais" id="btnExpandirTada" onclick="alternarExpandirSecao('tada')">Mostrar Tudo ▼</button>
+  </section>
+
+  <!-- RODAPÉ PROFISSIONAL DO CASSINO -->
+  <footer style="background: #12121a; border-top: 1px solid #22223b; padding: 25px 15px 80px 15px; text-align: center; color: #888; font-size: 11px;">
+    <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 15px;">
+      <span style="background: #ff4d4d; color: #fff; font-weight: bold; padding: 2px 8px; border-radius: 4px; font-size: 12px;">18+</span>
+      <span>Jogue com responsabilidade. Proibido para menores de idade.</span>
+    </div>
+    <div style="margin-bottom: 15px; font-size: 13px; color: #aaa; font-weight: bold; letter-spacing: 0.5px;">
+      PAGAMENTO 100% SEGURO VIA PIX
+    </div>
+    <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+      <span style="background: #1e1e2f; color: #00bfa5; padding: 6px 14px; border-radius: 6px; font-weight: bold; border: 1px solid #333; font-size: 12px;">⚡ PIX Instantâneo</span>
+      <span style="background: #1e1e2f; color: #e6af2e; padding: 6px 14px; border-radius: 6px; font-weight: bold; border: 1px solid #333; font-size: 12px;">🔒 SSL Criptografado</span>
+    </div>
+    <div style="margin-bottom: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+      <a href="#" style="color: #aaa; text-decoration: none;">Termos e Condições</a>
+      <a href="#" style="color: #aaa; text-decoration: none;">Política de Privacidade</a>
+      <a href="#" style="color: #aaa; text-decoration: none;">Jogo Responsável</a>
+    </div>
+    <p style="color: #555; margin: 0; font-size: 11px;">&copy; 2026 MXP$15. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- MENU INFERIOR -->
+  <nav class="menu-bottom">
+    <a href="home.html" class="active">🏠 <span>Início</span></a>
+    <a href="promocao.html">🎁 <span>Promoção</span></a>
+    <a href="convite.html">👥 <span>Convidar</span></a>
+    <a href="perfil.html">👤 <span>Perfil</span></a>
+  </nav>
+
+  <script>
+    let categoriaAtual = 'popular';
+    let expandido = false;
+    let expandidoPg = false;
+    let expandidoTada = false;
+
+    // SCRIPT DE NOTIFICAÇÕES AO VIVO COM FULANO E CICRANO
+    const players = ["Fulano", "Cicrano", "Carlos_99", "Ana_Silva", "Lucas_Bet", "MarianaX", "Gabriel_Sp"];
+    const acoesPremio = ["ganhou R$", "acabou de sacar R$", "lucrou R$"];
+    const jogosLista = ["Fortune Tiger", "Fortune Rabbit", "Gates of Olympus", "Money Coming", "Fortune Gems", "Sweet Bonanza"];
+
+    function gerarNoticiaAoVivo() {
+      const player = players[Math.floor(Math.random() * players.length)];
+      const acao = acoesPremio[Math.floor(Math.random() * acoesPremio.length)];
+      
+      let valor;
+      if (player === "Fulano") {
+        valor = "150,00";
+      } else if (player === "Cicrano") {
+        valor = "320,00";
+      } else {
+        valor = (Math.random() * (450 - 25) + 25).toFixed(2).replace('.', ',');
+      }
+
+      const jogo = jogosLista[Math.floor(Math.random() * jogosLista.length)];
+      const tickerElement = document.getElementById('liveWinnerTicker');
+
+      if (tickerElement) {
+        tickerElement.style.opacity = 0;
+        tickerElement.style.transform = 'translateY(-10px)';
+
+        setTimeout(() => {
+          tickerElement.innerText = `🎉 ${player} ${acao} ${valor} no ${jogo}!`;
+          tickerElement.style.opacity = 1;
+          tickerElement.style.transform = 'translateY(0)';
+        }, 300);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      gerarNoticiaAoVivo();
+      setInterval(gerarNoticiaAoVivo, 3500);
+      atualizarExibicaoJogos();
+      atualizarSecoesFixas();
+    });
+
+    function filtrarCategoria(cat, elemento) {
+      categoriaAtual = cat;
+      expandido = false;
+      document.getElementById('btnExpandir').innerText = "Mostrar Tudo ▼";
+      
+      document.querySelectorAll('.categorias button').forEach(b => b.classList.remove('active'));
+      elemento.classList.add('active');
+
+      atualizarExibicaoJogos();
+    }
+
+    function atualizarExibicaoJogos() {
+      const cards = document.querySelectorAll('#gridJogos .game-card');
+      let visiveisContador = 0;
+
+      cards.forEach(card => {
+        const catCard = card.getAttribute('data-cat');
+        if (catCard === categoriaAtual) {
+          if (expandido || visiveisContador < 8) { 
+            card.classList.add('visible');
+            visiveisContador++;
+          } else {
+            card.classList.remove('visible');
+          }
+        } else {
+          card.classList.remove('visible');
+        }
+      });
+
+      const totalDaCategoria = Array.from(cards).filter(c => c.getAttribute('data-cat') === categoriaAtual).length;
+      const btn = document.getElementById('btnExpandir');
+      if (totalDaCategoria > 8) {
+        btn.style.display = 'block';
+      } else {
+        btn.style.display = 'none';
+      }
+    }
+
+    function alternarExpandir() {
+      expandido = !expandido;
+      const btn = document.getElementById('btnExpandir');
+      if (expandido) {
+        btn.innerText = "Recolher ▲";
+      } else {
+        btn.innerText = "Mostrar Tudo ▼";
+      }
+      atualizarExibicaoJogos();
+    }
+
+    function alternarExpandi
