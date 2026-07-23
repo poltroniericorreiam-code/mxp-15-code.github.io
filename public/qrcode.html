@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento Pix - MXP$15</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --bg-color: #0b0e14; --card-bg: #161b22; --accent-blue: #007bff; --text-main: #ffffff; --text-muted: #8b949e; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: sans-serif; text-align: center; padding: 20px; margin: 0; }
+
+        .header { padding: 20px 0; display: flex; align-items: center; font-weight: bold; font-size: 1.2em; text-align: left; }
+        .box-qr { background: var(--card-bg); border: 1px solid #30363d; padding: 25px; border-radius: 12px; max-width: 400px; margin: 20px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        
+        .valor-destaque { color: #28a745; font-size: 1.8em; font-weight: bold; margin: 10px 0; }
+        
+        .qr-container { background: #fff; padding: 15px; display: inline-block; border-radius: 8px; margin: 15px 0; }
+        .qr-container img { width: 180px; height: 180px; display: block; }
+
+        .copia-cola-box { background: #0b0e14; border: 1px solid #30363d; padding: 10px; border-radius: 6px; font-size: 0.85em; color: var(--text-muted); word-break: break-all; margin: 15px 0; text-align: left; max-height: 60px; overflow-y: auto; }
+        
+        .btn-acao { width: 100%; padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1em; margin-top: 10px; }
+        .btn-copiar { background: var(--accent-blue); color: #fff; }
+        .btn-voltar { background: transparent; color: var(--text-muted); border: none; margin-top: 15px; cursor: pointer; }
+
+        .status-aviso { color: #e6af2e; font-weight: bold; font-size: 0.9em; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    </style>
+</head>
+<body>
+
+    <div class="header" style="max-width: 400px; margin: 0 auto;">
+        <i class="fa-solid fa-chevron-left" style="cursor:pointer;" onclick="history.back()"></i> 
+        <span style="margin: 0 auto;">Pagamento Pix (Teste)</span>
+    </div>
+
+    <div class="box-qr">
+        <p style="color: var(--text-muted); margin: 0;">Valor do Depósito</p>
+        <div class="valor-destaque" id="textoValor">R$ 0,00</div>
+        
+        <div class="qr-container" id="containerQrCode">
+            <p style="color: #000; font-size: 0.9em; margin: 70px 0;">Gerando Pix...</p>
+        </div>
+
+        <p style="font-size: 0.85em; color: var(--text-muted); margin: 5px 0;">Pix Copia e Cola:</p>
+        
+        <div class="copia-cola-box" id="textoCopiaCola">
+            Aguardando código...
+        </div>
+
+        <button class="btn-acao btn-copiar" onclick="copiarCodigoPix()">
+            <i class="fa-solid fa-copy"></i> Copiar Código Pix
+        </button>
+
+        <div class="status-aviso" id="statusPagamento">
+            <i class="fa-solid fa-spinner fa-spin"></i> Simulando aprovação automática em instantes...
+        </div>
+
+        <button class="btn-voltar" onclick="window.location.href='deposito.html'">Cancelar e Voltar</button>
+    </div>
+
+    <script>
+        // 1. Pega o valor enviado pela tela de depósito via URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const valorDepositado = parseFloat(urlParams.get('valor')) || 0;
+
+        if (valorDepositado <= 0) {
+            alert("Nenhum valor informado!");
+            window.location.href = "deposito.html";
+        }
+
+        document.getElementById('textoValor').innerText = `R$ ${valorDepositado.toFixed(2).replace('.', ',')}`;
+
+        let payloadPixAtual = `00020126580014br.gov.bcb.pix0136sua-chave-mock-gateway-seguro2504000053039865802BR5925MXP15 LTDA6009SAO PAULO62070503***6304${Math.floor(Math.random() * 8999 + 1000)}`;
+
+        // 2. GERA O QR CODE NA TELA
+        function iniciarTelaQrCode() {
+            document.getElementById('containerQrCode').innerHTML = `
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(payloadPixAtual)}" alt="QR Code Pix">
+            `;
+            document.getElementById('textoCopiaCola').innerText = payloadPixAtual;
+
+            // 3. SIMULAÇÃO AUTOMÁTICA DE PAGAMENTO APROVADO APÓS 3 SEGUNDOS
+            setTimeout(() => {
+                document.getElementById('statusPagamento').style.color = "#28a745";
+                document.getElementById('statusPagamento').innerHTML = `<i class="fa-solid fa-check-circle"></i> Pagamento Aprovado! Creditando saldo...`;
+
+                // Pega o saldo atual do navegador, soma o valor do depósito e salva
+                let saldoAtual = parseFloat(localStorage.getItem('mxp_saldo')) || 0;
+                let novoSaldo = saldoAtual + valorDepositado;
+                localStorage.setItem('mxp_saldo', novoSaldo.toFixed(2));
+
+                // Redireciona para a Home após 1.5 segundo para ver o saldo atualizado no topo
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 1500);
+
+            }, 3000); // 3 segundos simulando o tempo do usuário pagar e o banco aprovar
+        }
+
+        function copiarCodigoPix() {
+            navigator.clipboard.writeText(payloadPixAtual).then(() => {
+                alert("Código Pix copiado!");
+            });
+        }
+
+        window.onload = iniciarTelaQrCode;
+    </script>
+</body>
+</html>
