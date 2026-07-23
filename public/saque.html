@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saque - Casino Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --bg-color: #0b0e14; --accent-blue: #007bff; --text-muted: #8b949e; --accent-gold: #d4af37; }
+        body { background-color: var(--bg-color); color: #ffffff; font-family: sans-serif; margin: 0; padding: 0 20px; padding-bottom: 40px; }
+
+        .header { padding: 20px 0; display: flex; align-items: center; font-weight: bold; font-size: 1.2em; }
+        
+        /* Caixa principal dividida ao meio */
+        .saldo-container-duplo { 
+            background: #161b22; 
+            padding: 15px; 
+            border-radius: 12px; 
+            margin-bottom: 20px; 
+            border: 1px solid #30363d; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+        .bloco-metade { 
+            flex: 1; 
+            text-align: center; 
+        }
+        .divisor-vertical { 
+            width: 1px; 
+            background: #30363d; 
+            height: 45px; 
+            margin: 0 10px; 
+        }
+        
+        .saldo-label { color: var(--text-muted); font-size: 0.75em; margin-bottom: 4px; text-transform: uppercase; }
+        .saldo-valor-azul { color: #28a745; font-size: 1.4em; font-weight: bold; } /* Lado esquerdo */
+        .saldo-valor-amarelo { color: #ffc107; font-size: 1.4em; font-weight: bold; } /* Lado direito */
+        
+        .grid-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .value-btn { padding: 15px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; text-align: center; cursor: pointer; color: #fff; transition: 0.3s; font-weight: bold; }
+        .value-btn.selected { border: 1px solid var(--accent-blue); background: #1c2431; color: var(--accent-blue); }
+
+        .input-group { margin-bottom: 15px; }
+        .label-text { color: var(--text-muted); font-size: 0.9em; margin-bottom: 5px; display: block; }
+        .input-field { width: 100%; padding: 15px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; color: white; box-sizing: border-box; outline: none; font-size: 1.1em; }
+        
+        .btn-withdraw { width: 100%; padding: 18px; background: var(--accent-blue); border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 1em; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <i class="fa-solid fa-chevron-left" style="cursor:pointer;" onclick="history.back()"></i> 
+        <span style="margin: 0 auto;">Saque</span>
+    </div>
+
+    <!-- QUADRADO DIVIDIDO AO MEIO -->
+    <div class="saldo-container-duplo">
+        <!-- Lado Esquerdo (Risco Azul): Saldo total da carteira -->
+        <div class="bloco-metade">
+            <div class="saldo-label">Saldo da Carteira</div>
+            <div class="saldo-valor-azul" id="display-saldo">R$ 0,00</div>
+        </div>
+        
+        <div class="divisor-vertical"></div>
+
+        <!-- Lado Direito (Riscos Vermelho/Amarelo): Valor selecionado para o saque -->
+        <div class="bloco-metade">
+            <div class="saldo-label">Valor do Saque</div>
+            <div class="saldo-valor-amarelo" id="display-saque-topo">R$ 0,00</div>
+        </div>
+    </div>
+
+    <!-- Botões de atalho rápidos -->
+    <div class="grid-values">
+        <div class="value-btn" onclick="atualizarInput(10, this)">10,00</div>
+        <div class="value-btn" onclick="atualizarInput(50, this)">50,00</div>
+        <div class="value-btn" onclick="atualizarInput(100, this)">100,00</div>
+        <div class="value-btn" onclick="atualizarInput(500, this)">500,00</div>
+        <div class="value-btn" onclick="atualizarInput(1000, this)">1.000,00</div>
+        <div class="value-btn" onclick="atualizarInput(15000, this)">15.000,00</div>
+    </div>
+
+    <div class="input-group">
+        <span class="label-text">Valor do saque (Mínimo R$ 10,00)</span>
+        <input type="number" id="valor-saque" class="input-field" placeholder="0,00" oninput="atualizarValorTopo(this.value)">
+    </div>
+
+    <div class="input-group">
+        <span class="label-text">Nome do Beneficiário</span>
+        <input type="text" id="nome-usuario" class="input-field" placeholder="Digite seu nome completo">
+    </div>
+
+    <div class="input-group">
+        <span class="label-text">Chave PIX (CPF, E-mail ou Telefone)</span>
+        <input type="text" id="chave-pix" class="input-field" placeholder="Digite sua chave PIX">
+    </div>
+
+    <button class="btn-withdraw" onclick="realizarSaque()">Retirar Agora</button>
+
+    <script>
+        // Pega o saldo real salvo no navegador
+        let saldoAtualUsuario = parseFloat(localStorage.getItem('mxp_saldo')) || 0;
+
+        window.onload = function() {
+            // Exibe o saldo da carteira no lado esquerdo
+            document.getElementById('display-saldo').innerText = 'R$ ' + saldoAtualUsuario.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        };
+
+        // Atualiza o valor do lado direito em tempo real conforme digita ou clica
+        function atualizarValorTopo(valor) {
+            let num = parseFloat(valor) || 0;
+            document.getElementById('display-saque-topo').innerText = 'R$ ' + num.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        // Função para os botões rápidos preencherem o input e espelharem no topo
+        function atualizarInput(valor, btnElemento) {
+            const campoInput = document.getElementById('valor-saque');
+            campoInput.value = valor;
+            
+            // Atualiza o lado direito do topo
+            atualizarValorTopo(valor);
+
+            document.querySelectorAll('.value-btn').forEach(b => b.classList.remove('selected'));
+            btnElemento.classList.add('selected');
+        }
+
+        // Função de validação completa do saque
+        function realizarSaque() {
+            let valorSaque = parseFloat(document.getElementById('valor-saque').value);
+            let nome = document.getElementById('nome-usuario').value.trim();
+            let pix = document.getElementById('chave-pix').value.trim();
+            
+            if (isNaN(valorSaque) || valorSaque <= 0) {
+                alert("Por favor, digite ou selecione um valor válido para saque.");
+                return;
+            }
+
+            if (valorSaque < 10.00) {
+                alert("❌ Saque negado! O valor mínimo para retirada é de R$ 10,00.");
+                return;
+            }
+
+            if (!nome || !pix) {
+                alert("Preencha o nome do beneficiário e a chave Pix.");
+                return;
+            }
+
+            if (valorSaque > saldoAtualUsuario) {
+                alert("❌ Saque negado! O valor solicitado (R$ " + valorSaque.toFixed(2) + ") é maior do que o seu saldo disponível (R$ " + saldoAtualUsuario.toFixed(2) + ").");
+                return;
+            }
+
+            // Desconta do saldo e conclui
+            saldoAtualUsuario -= valorSaque;
+            localStorage.setItem('mxp_saldo', saldoAtualUsuario.toFixed(2));
+
+            alert("✅ Saque de R$ " + valorSaque.toFixed(2) + " aprovado! O pagamento foi enviado com sucesso para a chave Pix: " + pix);
+            
+            window.location.href = "home.html";
+        }
+    </script>
+</body>
+</html>
