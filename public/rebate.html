@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mxp$15 - Rebate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root { --bg: #0b0e14; --card: #161b22; --accent: #007bff; --text: #fff; --text-muted: #8b949e; --gold: #ffcc00; }
+        body { background-color: var(--bg); color: var(--text); font-family: sans-serif; padding: 15px; margin: 0; }
+        
+        /* Menu Superior Funcional */
+        .header-nav { display: flex; gap: 20px; font-size: 0.95em; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-bottom: 15px; color: var(--text-muted); overflow-x: auto; white-space: nowrap; }
+        .header-nav div { cursor: pointer; padding-bottom: 8px; transition: color 0.2s; }
+        .header-nav div:hover { color: var(--text); }
+        .header-nav div.ativo { color: var(--accent); font-weight: bold; border-bottom: 2px solid var(--accent); }
+
+        .topo-info { background: var(--card); padding: 12px; border-radius: 8px; font-size: 0.85em; display: flex; justify-content: space-between; margin-bottom: 15px; border: 1px solid #30363d; }
+        .topo-info span b { color: var(--gold); }
+
+        .layout-principal { display: flex; gap: 10px; height: calc(100vh - 180px); }
+
+        /* Menu Lateral Esquerdo */
+        .menu-lateral { display: flex; flex-direction: column; gap: 8px; width: 90px; flex-shrink: 0; }
+        .menu-btn { background: var(--card); border: 1px solid #30363d; color: var(--text); padding: 12px 5px; border-radius: 8px; text-align: center; font-size: 0.75em; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .menu-btn.destaque-receber { background: #21262d; border-color: var(--gold); color: var(--gold); }
+        .menu-btn.destaque-historico { background: #21262d; color: var(--text-muted); }
+        .menu-btn i { font-size: 1.2em; }
+
+        /* Lista Deslizante de Provedores */
+        .lista-provedores { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding-right: 5px; }
+        .lista-provedores::-webkit-scrollbar { width: 4px; }
+        .lista-provedores::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
+
+        .card-provedor { background: var(--card); border: 1px solid #30363d; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+        
+        .card-linha-superior { display: flex; justify-content: space-between; align-items: center; font-size: 0.85em; }
+        .provedor-nome { font-weight: bold; color: var(--text); display: flex; align-items: center; gap: 8px; }
+        .provedor-status-topo { color: var(--text-muted); font-size: 0.8em; }
+
+        .card-linha-inferior { display: flex; justify-content: space-between; align-items: center; font-size: 0.75em; color: var(--text-muted); border-top: 1px solid #21262d; padding-top: 8px; }
+        .barra-progresso { flex-grow: 1; background: #21262d; height: 6px; border-radius: 3px; margin: 0 10px; overflow: hidden; position: relative; }
+        .progresso-fill { background: var(--accent); height: 100%; width: 0%; }
+        
+        .valor-coletavel { color: var(--gold); font-weight: bold; }
+
+        /* Seções de Conteúdo */
+        .secao-conteudo { display: none; background: var(--card); padding: 20px; border-radius: 8px; border: 1px solid #30363d; height: calc(100vh - 180px); overflow-y: auto; }
+        .secao-conteudo.ativo { display: block; }
+
+        /* Estilo da aba Código de Resgate funcional */
+        .input-codigo { width: 100%; padding: 12px; background: var(--bg); border: 1px solid #30363d; color: var(--text); border-radius: 6px; margin-bottom: 10px; box-sizing: border-box; }
+        .btn-acao { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; }
+        .btn-acao:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <!-- Navegação Superior Funcional -->
+    <div class="header-nav" id="menu-superior">
+        <div data-aba="eventos">Eventos</div>
+        <div data-aba="rebate" class="ativo">Rebate</div>
+        <div data-aba="vip">VIP</div>
+        <div data-aba="codigo">Código de Resgate</div>
+        <div data-aba="historico">Histórico</div>
+    </div>
+
+    <!-- CONTEÚDO 1: REBATE -->
+    <div id="aba-rebate" class="secao-conteudo ativo">
+        <div class="topo-info" style="margin-top: -5px;">
+            <span>Pode ser coletado hoje: <b id="total-coletavel">R$ 0,00</b></span>
+            <span>Disponível para coleta amanhã: <b id="total-amanha">R$ 0,00</b></span>
+        </div>
+
+        <div class="layout-principal">
+            <div class="menu-lateral">
+                <div class="menu-btn" onclick="filtrarProvedores('cartas')"><i class="fa-solid fa-clone"></i> Cartas</div>
+                <div class="menu-btn" onclick="filtrarProvedores('slot')"><i class="fa-solid fa-dice"></i> Slot</div>
+                <div class="menu-btn" onclick="filtrarProvedores('pesca')"><i class="fa-solid fa-fish"></i> Pesca</div>
+                <div class="menu-btn destaque-receber" onclick="tentarColetar()"><i class="fa-solid fa-hand-holding-dollar"></i> Receber</div>
+                <div class="menu-btn destaque-historico" onclick="ativarAbaPorNome('historico')"><i class="fa-solid fa-clock-rotate-left"></i> Histórico</div>
+            </div>
+
+            <div class="lista-provedores" id="container-provedores">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTEÚDO 2: EVENTOS -->
+    <div id="aba-eventos" class="secao-conteudo">
+        <h2>Eventos da mxp$15</h2>
+        <p style="color: var(--text-muted);">Participe dos eventos diários e aumente seus ganhos na plataforma.</p>
+    </div>
+
+    <!-- CONTEÚDO 3: VIP -->
+    <div id="aba-vip" class="secao-conteudo">
+        <h2>Clube VIP mxp$15</h2>
+        <p style="color: var(--text-muted);">Seu nível atual: <b>VIP 1</b></p>
+        <p style="color: var(--text-muted);">Continue apostando para subir de nível e desbloquear maiores taxas de reembolso.</p>
+    </div>
+
+    <!-- CONTEÚDO 4: CÓDIGO DE RESGATE -->
+    <div id="aba-codigo" class="secao-conteudo">
+        <h2>Resgatar Código Promocional</h2>
+        <p style="color: var(--text-muted);">Digite seu código abaixo para creditar bônus diretamente na sua conta da mxp$15.</p>
+        <input type="text" id="input-codigo-resgate" class="input-codigo" placeholder="Insira o código aqui...">
+        <button class="btn-acao" onclick="resgatarCodigo()">Resgatar Agora</button>
+    </div>
+
+    <!-- CONTEÚDO 5: HISTÓRICO -->
+    <div id="aba-historico" class="secao-conteudo">
+        <h2>Histórico de Transações e Coletas</h2>
+        <div id="lista-historico" style="margin-top: 15px; color: var(--text-muted); font-size: 0.9em;">
+            Nenhuma coleta realizada recentemente.
+        </div>
+    </div>
+
+    <script>
+        // Banco de dados dos provedores com tags de categoria para os botões laterais funcionarem
+        let dadosRebate = [
+            { id: 'pg', nome: 'PG Aposta', categoria: 'slot', gasto: 15.00, taxa: 0.30 },
+            { id: 'tada', nome: 'TaDa Aposta', categoria: 'slot', gasto: 0.00, taxa: 0.30 },
+            { id: 'c9', nome: 'C9 GAMING Aposta', categoria: 'cartas', gasto: 50.00, taxa: 0.20 },
+            { id: 'jdb', nome: 'JDB Aposta', categoria: 'pesca', gasto: 0.00, taxa: 0.20 },
+            { id: 'spribe', nome: 'SPRIBE Aposta', categoria: 'slot', gasto: 0.00, taxa: 0.20 },
+            { id: 'play', nome: 'PP Aposta', categoria: 'slot', gasto: 0.00, taxa: 0.20 },
+            { id: 'cp', nome: 'CP Aposta', categoria: 'cartas', gasto: 0.00, taxa: 0.20 },
+            { id: 'gako', nome: 'GAKO Aposta', categoria: 'pesca', gasto: 10.00, taxa: 0.30 },
+            { id: 'fc', nome: 'FC Aposta', categoria: 'slot', gasto: 0.00, taxa: 0.30 }
+        ];
+
+        let filtroAtual = 'todos';
+
+        // Carregar dados salvos se houver
+        let salvos = JSON.parse(localStorage.getItem('mxp15_rebate_dados')) || {};
+        dadosRebate.forEach(item => {
+            if(salvos[item.id] !== undefined) {
+                item.gasto = salvos[item.id];
+            }
+        });
+
+        // Controle do Menu Superior (Abas) com eventos reais de clique
+        document.querySelectorAll('#menu-superior div').forEach(menuItem => {
+            menuItem.addEventListener('click', function() {
+                let abaDestino = this.getAttribute('data-aba');
+                ativarAbaPorNome(abaDestino);
+            });
+        });
+
+        function ativarAbaPorNome(nomeAba) {
+            document.querySelectorAll('.secao-conteudo').forEach(secao => {
+                secao.classList.remove('ativo');
+            });
+            document.querySelectorAll('#menu-superior div').forEach(nav => {
+                nav.classList.remove('ativo');
+            });
+
+            let abaAlvo = document.getElementById('aba-' + nomeAba);
+            let navAlvo = document.querySelector(`#menu-superior div[data-aba="${nomeAba}"]`);
+
+            if(abaAlvo) abaAlvo.classList.add('ativo');
+            if(navAlvo) navAlvo.classList.add('ativo');
+        }
+
+        // Renderizar a lista de provedores com base no filtro lateral (Cartas, Slot, Pesca)
+        function renderizarRebate() {
+            const container = document.getElementById('container-provedores');
+            container.innerHTML = '';
+            
+            let totalColetavelGeral = 0;
+            let itensExibidos = 0;
+
+            dadosRebate.forEach(item => {
+                let valorRebate = item.gasto * (item.taxa / 100);
+                totalColetavelGeral += valorRebate;
+
+                if (filtroAtual !== 'todos' && item.categoria !== filtroAtual) {
+                    return;
+                }
+
+                itensExibidos++;
+                container.innerHTML += `
+                    <div class="card-provedor">
+                        <div class="card-linha-superior">
+                            <span class="provedor-nome">${item.nome}</span>
+                            <span class="provedor-status-topo">R$ ${item.gasto.toFixed(2)} Taxa de reembolso: <b>${item.taxa.toFixed(2)}%</b></span>
+                        </div>
+                        <div class="card-linha-inferior">
+                            <span>Aposte 1,00 para receber <b style="color:var(--text);">${item.taxa.toFixed(2)}%</b></span>
+                            <div class="barra-progresso">
+                                <div class="progresso-fill" style="width: ${Math.min((item.gasto / 100) * 100, 100)}%;"></div>
+                            </div>
+                            <span>Coletável: <span class="valor-coletavel">R$ ${valorRebate.toFixed(2)}</span></span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            if(itensExibidos === 0) {
+                container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px;">Nenhum provedor encontrado nesta categoria.</div>`;
+            }
+
+            document.getElementById('total-coletavel').innerText = `R$ ${totalColetavelGeral.toFixed(2)}`;
+        }
+
+        function filtrarProvedores(categoria) {
+            if(filtroAtual === categoria) {
+                filtroAtual = 'todos'; // Clicar de novo desfaz o filtro
+            } else {
+                filtroAtual = categoria;
+            }
+            renderizarRebate();
+        }
+
+        // Função de Coleta estrita: Só executa se houver saldo disponível
+        function tentarColetar() {
+            let totalColetavelGeral = 0;
+            dadosRebate.forEach(item => {
+                totalColetavelGeral += item.gasto * (item.taxa / 100);
+            });
+
+            if (totalColetavelGeral <= 0) {
+                alert("Você não possui saldo disponível para coleta no momento na mxp$15.");
+                return;
+            }
+
+            let valorResgatado = totalColetavelGeral.toFixed(2);
+            alert(`Sucesso! R$ ${valorResgatado} coletados para a carteira da mxp$15.`);
+            
+            // Registrar no histórico
+            let histDiv = document.getElementById('lista-historico');
+            if(histDiv.innerText.includes('Nenhuma')) histDiv.innerHTML = '';
+            let dataHora = new Date().toLocaleString('pt-BR');
+            histDiv.innerHTML += `<div style="padding: 8px; border-bottom: 1px solid #30363d;">Coleta de Rebate: <b>R$ ${valorResgatado}</b> - ${dataHora}</div>`;
+
+            // Zera os gastos após a coleta
+            dadosRebate.forEach(p => p.gasto = 0);
+            let objSalvar = {};
+            dadosRebate.forEach(p => objSalvar[p.id] = p.gasto);
+            localStorage.setItem('mxp15_rebate_dados', JSON.stringify(objSalvar));
+            renderizarRebate();
+        }
+
+        // Função do Código de Resgate
+        function resgatarCodigo() {
+            let codigo = document.getElementById('input-codigo-resgate').value.trim();
+            if(codigo === '') {
+                alert("Por favor, digite um código de resgate válido.");
+                return;
+            }
+            alert(`Código "${codigo}" aplicado com sucesso na mxp$15!`);
+            document.getElementById('input-codigo-resgate').value = '';
+        }
+
+        window.onload = function() {
+            renderizarRebate();
+        };
+    </script>
+</body>
+</html>
